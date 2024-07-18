@@ -1,0 +1,42 @@
+
+	Generate the SSH key in the desktop by opening (right click) Git Bash (only 1 time for each machine)
+ssh-keygen (enter)
+cat (C:\Users\Lenovo\.ssh\) // is used to get SSH key
+
+-- The SSH key will be generated --
+-- Have to send the SSH key to owner / master branch holder --
+
+
+
+		[Go to file path where you have folder, open bash & do below]
+git init
+	
+		Clone repo
+git clone (repo URL got from master)
+	
+		[Do all this in the terminal of the project in VS code (on terminal, turn on git bash)]
+
+	creating a new branch and switching to it
+git checkout -b (branch name)
+	changes are to be saved 		
+git add .
+git commit -m "msg" // to save changes in repo
+git remote add origin (repo url in SSH format) // adding the remote URl in the local machine
+git push --set-upstream origin (branch name) // only for 1st time
+git push //from the next time use only this
+
+// After 1st push just do this
+git add .
+git commit -m "msg"
+git push
+
+
+cp .env.example .env
+
+
+
+		
+
+	
+	
+	
