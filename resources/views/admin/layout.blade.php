@@ -106,7 +106,7 @@
                                     <div class="account-item clearfix js-item-menu">
 
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            <a class="js-acc-btn" href="#">Partha Mondal</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
 
@@ -118,7 +118,7 @@
 
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#">
+                                                <a href="{{ route('logout') }}">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>

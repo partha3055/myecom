@@ -1,4 +1,4 @@
-@extends('admin/layout')
+@extends('admin.layout')
 @section('container')
     <h1 class="mb10">Category</h1>
     <a href="{{ route('manage_category') }}">
