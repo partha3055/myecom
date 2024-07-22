@@ -57,7 +57,11 @@
 
                         <li>
                             <a href="{{ route('category') }}">
-                                <i class="fas fa-tachometer-alt"></i>Category</a>
+                                <i class="fas fa-list"></i>Category</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('coupon') }}">
+                                <i class="fas fa-tachometer-alt"></i>Coupon</a>
                         </li>
                     </ul>
                 </div>
@@ -75,14 +79,18 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li>
+                        <li class="@yield('dashboard_select')">
                             <a href="{{ route('dashboard') }}">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
 
-                        <li>
+                        <li class="@yield('category_select')">
                             <a href="{{ route('category') }}">
-                                <i class="fas fa-tachometer-alt"></i>Category</a>
+                                <i class="fas fa-list"></i>Category</a>
+                        </li>
+                        <li class="@yield('coupon_select')">
+                            <a href="{{ route('coupon') }}">
+                                <i class="fas fa-tag"></i>Coupon</a>
                         </li>
                     </ul>
                 </nav>
