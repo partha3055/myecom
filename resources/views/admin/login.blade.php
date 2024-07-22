@@ -50,6 +50,7 @@
                                 {{ Config::get('constants.SITE_NAME') }}
                             </a>
                         </div>
+                        {{ session('error') }}
                         <div class="login-form">
                             <form action="{{ route('admin.auth') }}" method="post">
                                 @csrf
@@ -80,10 +81,11 @@
                                         <button class="au-btn au-btn--block au-btn--blue2">sign in with twitter</button>
                                     </div>
                                 </div> -->
+                                {{-- @error('email')
                                 <div class="alert alert-danger" role="alert">
-                                    {{-- This is a danger alert—check it out! --}}
                                     {{ session('error') }}
                                 </div>
+                                @enderror --}}
                             </form>
                             <!-- <div class="register-link">
                                 <p>
