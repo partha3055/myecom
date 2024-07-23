@@ -50,7 +50,12 @@
                                 {{ Config::get('constants.SITE_NAME') }}
                             </a>
                         </div>
-                        {{ session('error') }}
+                        @if (session()->has('error'))
+                            <div class="alert alert-danger" role="alert">
+                                {{-- This is a danger alert—check it out! --}}
+                                {{ session('error') }}
+                            </div>
+                        @endif
                         <div class="login-form">
                             <form action="{{ route('admin.auth') }}" method="post">
                                 @csrf

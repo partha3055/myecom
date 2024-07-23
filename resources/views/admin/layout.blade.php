@@ -54,14 +54,25 @@
                             <a href="{{ route('dashboard') }}">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
-
                         <li>
                             <a href="{{ route('category') }}">
-                                <i class="fas fa-list"></i>Category</a>
+                                <i class="fas fa-tachometer-alt"></i>Category</a>
                         </li>
                         <li>
                             <a href="{{ route('coupon') }}">
                                 <i class="fas fa-tachometer-alt"></i>Coupon</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('size') }}">
+                                <i class="fas fa-tachometer-alt"></i>Size</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('color') }}">
+                                <i class="fas fa-tachometer-alt"></i>Color</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('product') }}">
+                                <i class="fas fa-tachometer-alt"></i>Product</a>
                         </li>
                     </ul>
                 </div>
@@ -83,7 +94,6 @@
                             <a href="{{ route('dashboard') }}">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
-
                         <li class="@yield('category_select')">
                             <a href="{{ route('category') }}">
                                 <i class="fas fa-list"></i>Category</a>
@@ -91,6 +101,18 @@
                         <li class="@yield('coupon_select')">
                             <a href="{{ route('coupon') }}">
                                 <i class="fas fa-tag"></i>Coupon</a>
+                        </li>
+                        <li class="@yield('size_select')">
+                            <a href="{{ route('size') }}">
+                                <i class="fas fa-window-maximize"></i>Size</a>
+                        </li>
+                        <li class="@yield('color_select')">
+                            <a href="{{ route('color') }}">
+                                <i class="fas fa-paint-brush"></i>Color</a>
+                        </li>
+                        <li class="@yield('product_select')">
+                            <a href="{{ route('product') }}">
+                                <i class="fas fa-tachometer-alt"></i>Product</a>
                         </li>
                     </ul>
                 </nav>

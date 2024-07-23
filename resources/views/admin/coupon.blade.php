@@ -2,7 +2,11 @@
 @section('page_title', 'Coupon')
 @section('coupon_select', 'active')
 @section('container')
-    {{ session('message') }}
+    @if (session()->has('message'))
+        <div class="alert alert-success" role="alert">
+            {{ session('message') }}
+        </div>
+    @endif
     <h1 class="mb10">Coupon</h1>
     <a href="{{ route('manage_coupon') }}">
         <button type="button" class="btn btn-success">Add Coupon</button>

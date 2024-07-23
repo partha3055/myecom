@@ -19,11 +19,11 @@
                                     <input id="category_name" value="{{ $category_name }}" name="category_name"
                                         type="text" class="form-control" aria-required="true" aria-invalid="false"
                                         required>
-                                    @error('category_name')
+                                    {{-- @error('category_name')
                                         <div class="alert alert-danger" role="alert">
                                             {{ $message }}
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                                 <div class="form-group">
                                     <label for="category_slug" class="control-label mb-1">Category Slug</label>
