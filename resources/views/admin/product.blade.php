@@ -21,6 +21,7 @@
                             <th>Id</th>
                             <th>Name</th>
                             <th>Slug</th>
+                            <th>Image</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -30,6 +31,9 @@
                                 <td>{{ $list->id }}</td>
                                 <td>{{ $list->name }}</td>
                                 <td>{{ $list->slug }}</td>
+                                @if ($list->image != '')
+                                    <td><img width="50px" src="{{ asset('upload/' . $list->image) }}" alt=""></td>
+                                @endif
                                 <td>
                                     <a href="{{ url('admin/product/manage_product/') }}/{{ $list->id }}"><button
                                             type="button" class="btn btn-success">Edit</button></a>

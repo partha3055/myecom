@@ -15,12 +15,13 @@
     </a>
     <div class="row m-t-30">
         <div class="col-md-12">
-            <form action="{{ route('product.manage_product_process') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="{{ route('product.manage_product_process') }}" method="post"
+                                enctype="multipart/form-data">
+                                @csrf
                                 <div class="form-group">
                                     <label for="name" class="control-label mb-1">Product Name</label>
                                     <input id="name" value="{{ $name }}" name="name" type="text"
@@ -106,87 +107,17 @@
                                         </div>
                                     @enderror
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <label for="sku" class="control-label mb-1">SKU</label>
-                                            <input id="sku" value="" name="sku" type="text"
-                                                class="form-control" aria-required="true" aria-invalid="false" required>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="mrp" class="control-label mb-1">MRP</label>
-                                            <input id="mrp" value="" name="mrp" type="text"
-                                                class="form-control" aria-required="true" aria-invalid="false" required>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="price" class="control-label mb-1">Price</label>
-                                            <input id="price" value="" name="price" type="text"
-                                                class="form-control" aria-required="true" aria-invalid="false" required>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="size_id" class="control-label mb-1">Size</label>
-                                            <select id="size_id" name="size_id" type="text" class="form-control"
-                                                aria-required="true" aria-invalid="false" required>
-                                                <option value="">Select Size</option>
-                                                @foreach ($size as $list)
-                                                    {{-- @if ($size_id == $list->id)
-                                                        <option selected value="{{ $list->id }}">
-                                                        @else
-                                                        <option value="{{ $list->id }}">
-                                                    @endif --}}
-                                                    <option value="{{ $list->id }}">{{ $list->size }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="color_id" class="control-label mb-1">Color</label>
-                                            <select id="color_id" name="color_id" type="text" class="form-control"
-                                                aria-required="true" aria-invalid="false" required>
-                                                <option value="">Select Color</option>
-                                                @foreach ($color as $list)
-                                                    {{-- @if ($category_id == $list->id)
-                                                        <option selected value="{{ $list->id }}">
-                                                        @else
-                                                        <option value="{{ $list->id }}">
-                                                    @endif --}}
-                                                    <option value="{{ $list->id }}">{{ $list->color }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <label for="qty" class="control-label mb-1">Qty</label>
-                                            <input id="qty" value="" name="qty" type="text"
-                                                class="form-control" aria-required="true" aria-invalid="false" required>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="attr_image" class="control-label mb-1">Image</label>
-                                            <input id="attr_image" name="attr_image" type="file" class="form-control"
-                                                aria-required="true" aria-invalid="false" {{ $image_required }}>
-                                            @error('attr_image')
-                                                <div class="alert alert-danger" role="alert">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                <div>
+                                    <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                        Submit
+                                    </button>
                                 </div>
-                            </div>
+                                <input type="hidden" name="id" value="{{ $id }}" />
+                            </form>
                         </div>
                     </div>
                 </div>
-                <div>
-                    <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                        Submit
-                    </button>
-                    <input type="hidden" name="id" value="{{ $id }}" />
-                </div>
-            </form>
+            </div>
         </div>
     </div>
 @endsection

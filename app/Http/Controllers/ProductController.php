@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -47,6 +48,11 @@ class ProductController extends Controller
             $result['warranty'] = '';
             $result['id'] = 0;
         }
+
+        $result['category'] = DB::table('categories')->where(['status' => 1])->get();
+        $result['size'] = DB::table('sizes')->where(['status' => 1])->get();
+        $result['color'] = DB::table('colors')->where(['status' => 1])->get();
+
         // echo '<pre>';
         // print_r($result);
         // die();
@@ -56,8 +62,14 @@ class ProductController extends Controller
     public function manage_product_process(Request $request)
     {
         //return $request->post();
+        if ($request->post('id')) {
+            $image_validation = "mimes:jpeg,jpg,png,webp";
+        } else {
+            $image_validation = "required|mimes:jpeg,jpg,png,webp";
+        }
         $request->validate([
             'name' => 'required',
+            'image' => $image_validation,
             'slug' => 'required|unique:products,slug,' . $request->post('id'),
         ]);
         if ($request->post('id')) {
@@ -67,11 +79,18 @@ class ProductController extends Controller
             $model = new Product();
             $msg = "product created successfully";
         }
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $ext = $image->extension();
+            $image_name = time() . '.' . $ext;
+            $image->move('upload', $image_name);
+            $model->image = $image_name;
+        }
 
         //$model = new product();
         $model->category_id = $request->post('category_id');
         $model->name = $request->post('name');
-        $model->status = NULL;
+        //$model->image = $request->post('image');
         $model->slug = $request->post('slug');
         $model->brand = $request->post('brand');
         $model->model = $request->post('model');
