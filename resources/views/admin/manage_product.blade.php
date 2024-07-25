@@ -109,30 +109,31 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12">
-                        <div class="card">
+                    <h3 class="mb10">Product Attributes</h3>
+                    <div class="col-lg-12" id="product_attr_box">
+                        <div class="card" id="product_attr_1">
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label for="sku" class="control-label mb-1">SKU</label>
-                                            <input id="sku" value="" name="sku" type="text"
+                                            <input id="sku" value="" name="sku[]" type="text"
                                                 class="form-control" aria-required="true" aria-invalid="false" required>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label for="mrp" class="control-label mb-1">MRP</label>
-                                            <input id="mrp" value="" name="mrp" type="text"
+                                            <input id="mrp" value="" name="mrp[]" type="text"
                                                 class="form-control" aria-required="true" aria-invalid="false" required>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label for="price" class="control-label mb-1">Price</label>
-                                            <input id="price" value="" name="price" type="text"
+                                            <input id="price" value="" name="price[]" type="text"
                                                 class="form-control" aria-required="true" aria-invalid="false" required>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label for="size_id" class="control-label mb-1">Size</label>
-                                            <select id="size_id" name="size_id" type="text" class="form-control"
-                                                aria-required="true" aria-invalid="false" required>
+                                            <select id="size_id" name="size_id[]" type="text" class="form-control"
+                                                aria-required="true" aria-invalid="false">
                                                 <option value="">Select Size</option>
                                                 @foreach ($size as $list)
                                                     {{-- @if ($size_id == $list->id)
@@ -144,10 +145,10 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label for="color_id" class="control-label mb-1">Color</label>
-                                            <select id="color_id" name="color_id" type="text" class="form-control"
-                                                aria-required="true" aria-invalid="false" required>
+                                            <select id="color_id" name="color_id[]" type="text" class="form-control"
+                                                aria-required="true" aria-invalid="false">
                                                 <option value="">Select Color</option>
                                                 @foreach ($color as $list)
                                                     {{-- @if ($category_id == $list->id)
@@ -159,20 +160,26 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-2">
+                                        <div class="col-md-3">
                                             <label for="qty" class="control-label mb-1">Qty</label>
-                                            <input id="qty" value="" name="qty" type="text"
+                                            <input id="qty" value="" name="qty[]" type="text"
                                                 class="form-control" aria-required="true" aria-invalid="false" required>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label for="attr_image" class="control-label mb-1">Image</label>
-                                            <input id="attr_image" name="attr_image" type="file" class="form-control"
-                                                aria-required="true" aria-invalid="false" {{ $image_required }}>
+                                            <input id="attr_image" name="attr_image[]" type="file"
+                                                class="form-control" aria-required="true" aria-invalid="false"
+                                                {{ $image_required }}>
                                             @error('attr_image')
                                                 <div class="alert alert-danger" role="alert">
                                                     {{ $message }}
                                                 </div>
                                             @enderror
+                                        </div>
+                                        <div class="col-md-2">
+                                            <label for="attr_image" class="control-label mb-1"></label>
+                                            <button type="button" class="btn btn-success btn-lg" onclick="add_more()">
+                                                <i class="fa fa-plus"></i>&nbsp; Add</button>
                                         </div>
                                     </div>
                                 </div>
@@ -189,4 +196,46 @@
             </form>
         </div>
     </div>
+    <script>
+        var loop_count = 1;
+
+        function add_more() {
+            //alert('hello');
+            loop_count++;
+            var html = '<div class="card" id="product_attr_' + loop_count +
+                '"><div class="card-body"><div class="form-group"><div class="row">';
+            html +=
+                '<div class="col-md-3"><label for="sku" class="control-label mb-1">SKU</label><input id="sku" value="" name="sku[]" type="text"class="form-control" aria-required="true" aria-invalid="false" required></div>';
+            html +=
+                '<div class="col-md-3"><label for="mrp" class="control-label mb-1">MRP</label><input id="mrp" value="" name="mrp[]" type="text"class="form-control" aria-required="true" aria-invalid="false" required></div>';
+            html +=
+                '<div class="col-md-3"><label for="price" class="control-label mb-1">Price</label><input id="price" value="" name="price[]" type="text"class="form-control" aria-required="true" aria-invalid="false" required></div>';
+            // html +=
+            //     '<div class="col-md-3"><label for="size_id" class="control-label mb-1">Size</label><select id="size_id" name="size_id" type="text" class="form-control"aria-required="true" aria-invalid="false" required><option value="">Select Size</option>@foreach ($size as $list)<option value="{{ $list->id }}">{{ $list->size }}</option>@endforeach</select></div>';
+            var size_id_html = jQuery('#size_id').html();
+            html +=
+                '<div class="col-md-3"><label for="size_id" class="control-label mb-1">Size</label><select id="size_id" name="size_id[]" type="text" class="form-control"aria-required="true" aria-invalid="false" >' +
+                size_id_html + '</select></div>';
+            // html +=
+            //     '<div class="col-md-3"><label for="color_id" class="control-label mb-1">Color</label><select id="color_id" name="color_id" type="text" class="form-control"aria-required="true" aria-invalid="false" required><option value="">Select Color</option>@foreach ($color as $list)<option value="{{ $list->id }}">{{ $list->color }}</option>@endforeach</select></div>';
+            var color_id_html = jQuery('#color_id').html();
+            html +=
+                '<div class="col-md-3"><label for="color_id" class="control-label mb-1">Color</label><select id="color_id" name="color_id[]" type="text" class="form-control"aria-required="true" aria-invalid="false" >' +
+                color_id_html + '</select></div>';
+            html +=
+                '<div class="col-md-3"><label for="qty" class="control-label mb-1">Qty</label><input id="qty" value="" name="qty[]" type="text"class="form-control" aria-required="true" aria-invalid="false" required></div>';
+            html +=
+                '<div class="col-md-6"><label for="attr_image" class="control-label mb-1">Image</label><input id="attr_image" name="attr_image[]" type="file" class="form-control"aria-required="true" aria-invalid="false" {{ $image_required }}>@error('attr_image')<div class="alert alert-danger" role="alert">{{ $message }}</div>@enderror</div>';
+            html +=
+                '<div class="col-md-2"><label for="attr_image" class="control-label mb-1"></label><button type="button" class="btn btn-danger btn-lg" onclick=remove_more("' +
+                loop_count + '")><i class="fa fa-minus"></i>&nbsp; Remove</button></div>';
+            html += '</div></div></div></div>';
+
+            jQuery('#product_attr_box').append(html);
+        }
+
+        function remove_more(loop_count) {
+            jQuery('#product_attr_' + loop_count).remove();
+        }
+    </script>
 @endsection

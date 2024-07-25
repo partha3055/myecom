@@ -62,6 +62,10 @@ class ProductController extends Controller
     public function manage_product_process(Request $request)
     {
         //return $request->post();
+        // echo '<pre>';
+        // print_r($request->post());
+        // die();
+
         if ($request->post('id')) {
             $image_validation = "mimes:jpeg,jpg,png,webp";
         } else {
@@ -74,6 +78,8 @@ class ProductController extends Controller
         ]);
         if ($request->post('id')) {
             $model = Product::find($request->post('id'));
+            //dd($model);
+            //$p_attr = DB::table('products_attr')->where(['product_id' => $request->post('id')]);
             $msg = "product updated successfully";
         } else {
             $model = new Product();
@@ -103,6 +109,36 @@ class ProductController extends Controller
         $model->status = 1;
         //dd($model);
         $model->save();
+        $pid = $model->id;
+
+        if ($request->post('id')) {
+            $p_attr = DB::table('products_attr')->where(['product_id' => $request->post('id')]);
+
+            dd($p_attr);
+        }
+
+        /*Product Arttributr Insert Start*/
+        $skuAttr = $request->post('sku');
+        $mrpAttr = $request->post('mrp');
+        //dd($mrpAttr);
+        $priceAttr = $request->post('price');
+        $qtyAttr = $request->post('qty');
+        $size_idAttr = $request->post('size_id');
+        $color_idAttr = $request->post('color_id');
+        foreach ($skuAttr as $key => $value) {
+            //dd($mrpAttr);
+            $ProductAttrArr['product_id'] = 1;
+            $ProductAttrArr['size_id'] = $size_idAttr[$key];
+            $ProductAttrArr['color_id'] = $color_idAttr[$key];
+            $ProductAttrArr['sku'] = $skuAttr[$key];
+            $ProductAttrArr['attr_image'] = 'p';
+            $ProductAttrArr['mrp'] = $mrpAttr[$key];
+            $ProductAttrArr['price'] = $priceAttr[$key];
+            $ProductAttrArr['qty'] = $qtyAttr[$key];
+            DB::table('products_attr')->insert($ProductAttrArr);
+        }
+        /*Product Arttributr Insert End*/
+
         $request->session()->flash('message', $msg);
         return redirect('admin/product');
     }
@@ -113,6 +149,8 @@ class ProductController extends Controller
         //echo $id;
         $model = Product::find($id);
         $model->delete();
+        $p_attr = DB::table('products_attr')->where(['product_id' => $id]);
+        $p_attr->delete();
         $request->session()->flash('message', 'product deleted successfully');
         return redirect('admin/product');
     }
