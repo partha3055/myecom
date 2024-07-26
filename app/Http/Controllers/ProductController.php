@@ -33,6 +33,9 @@ class ProductController extends Controller
             $result['uses'] = $arr['0']->uses;
             $result['warranty'] = $arr['0']->warranty;
             $result['id'] = $arr['0']->id;
+
+            $result['ProductAttrArr'] = DB::table('products_attr')->where(['product_id' => $id])->get();
+            //dd($result['ProductAttrArr']);
         } else {
             $result['category_id'] = '';
             $result['name'] = '';
@@ -47,6 +50,16 @@ class ProductController extends Controller
             $result['uses'] = '';
             $result['warranty'] = '';
             $result['id'] = 0;
+
+            $result['ProductAttrArr'][0]['id'] = '';
+            $result['ProductAttrArr'][0]['product_id'] = '';
+            $result['ProductAttrArr'][0]['size_id'] = '';
+            $result['ProductAttrArr'][0]['color_id'] = '';
+            $result['ProductAttrArr'][0]['sku'] = '';
+            $result['ProductAttrArr'][0]['attr_image'] = '';
+            $result['ProductAttrArr'][0]['mrp'] = '';
+            $result['ProductAttrArr'][0]['price'] = '';
+            $result['ProductAttrArr'][0]['qty'] = '';
         }
 
         $result['category'] = DB::table('categories')->where(['status' => 1])->get();
@@ -78,8 +91,6 @@ class ProductController extends Controller
         ]);
         if ($request->post('id')) {
             $model = Product::find($request->post('id'));
-            //dd($model);
-            //$p_attr = DB::table('products_attr')->where(['product_id' => $request->post('id')]);
             $msg = "product updated successfully";
         } else {
             $model = new Product();
@@ -87,7 +98,9 @@ class ProductController extends Controller
         }
         if ($request->hasFile('image')) {
             $image = $request->file('image');
+            //dd($image);
             $ext = $image->extension();
+            //dd($ext);
             $image_name = time() . '.' . $ext;
             $image->move('upload', $image_name);
             $model->image = $image_name;
@@ -111,13 +124,16 @@ class ProductController extends Controller
         $model->save();
         $pid = $model->id;
 
-        if ($request->post('id')) {
-            $p_attr = DB::table('products_attr')->where(['product_id' => $request->post('id')]);
-
-            dd($p_attr);
-        }
+        // if ($request->hasFile('attr_image')) {
+        //     $image = $request->file('attr_image');
+        //     $ext = $image->extension();
+        //     $image_name = "attr_" . time() . '.' . $ext;
+        //     $image->move('upload', $image_name);
+        //     $imageAttr = $image_name;
+        // }
 
         /*Product Arttributr Insert Start*/
+        $pAttr = $request->post('pattr_id');
         $skuAttr = $request->post('sku');
         $mrpAttr = $request->post('mrp');
         //dd($mrpAttr);
@@ -127,7 +143,7 @@ class ProductController extends Controller
         $color_idAttr = $request->post('color_id');
         foreach ($skuAttr as $key => $value) {
             //dd($mrpAttr);
-            $ProductAttrArr['product_id'] = 1;
+            $ProductAttrArr['product_id'] = $pid;
             $ProductAttrArr['size_id'] = $size_idAttr[$key];
             $ProductAttrArr['color_id'] = $color_idAttr[$key];
             $ProductAttrArr['sku'] = $skuAttr[$key];
@@ -135,8 +151,14 @@ class ProductController extends Controller
             $ProductAttrArr['mrp'] = $mrpAttr[$key];
             $ProductAttrArr['price'] = $priceAttr[$key];
             $ProductAttrArr['qty'] = $qtyAttr[$key];
-            DB::table('products_attr')->insert($ProductAttrArr);
+
+            if ($pAttr[$key] != '') {
+                DB::table('products_attr')->where(['id' => $pAttr[$key]])->update($ProductAttrArr);
+            } else {
+                DB::table('products_attr')->insert($ProductAttrArr);
+            }
         }
+        //}
         /*Product Arttributr Insert End*/
 
         $request->session()->flash('message', $msg);
@@ -149,10 +171,16 @@ class ProductController extends Controller
         //echo $id;
         $model = Product::find($id);
         $model->delete();
-        $p_attr = DB::table('products_attr')->where(['product_id' => $id]);
-        $p_attr->delete();
+        DB::table('products_attr')->where(['product_id' => $id])->delete();
         $request->session()->flash('message', 'product deleted successfully');
         return redirect('admin/product');
+    }
+
+    public function product_attr_delete(Request $request, $pattr_id, $id)
+    {
+        //dd($pattr_id);
+        DB::table('products_attr')->where(['id' => $pattr_id])->delete();
+        return redirect('admin/product/manage_product/' . $id);
     }
 
     public function status(Request $request, $type, $id)
