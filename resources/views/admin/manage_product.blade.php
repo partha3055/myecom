@@ -20,6 +20,11 @@
             {{ $message }}
         </div>
     @enderror
+    @error('image.*')
+        <div class="alert alert-danger" role="alert">
+            {{ $message }}
+        </div>
+    @enderror
     <a href="{{ route('product') }}">
         <button type="button" class="btn btn-success">Back</button>
     </a>
@@ -63,10 +68,25 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        {{-- <div class="col-md-4">
                                             <label for="brand" class="control-label mb-1">Brand</label>
                                             <input id="brand" value="{{ $brand }}" name="brand" type="text"
                                                 class="form-control" aria-required="true" aria-invalid="false" required>
+                                        </div> --}}
+                                        <div class="col-md-4">
+                                            <label for="brand" class="control-label mb-1">Brand</label>
+                                            <select id="brand_id" name="brand_id" type="text" class="form-control"
+                                                aria-required="true" aria-invalid="false" required>
+                                                <option value="">Select Brand</option>
+                                                @foreach ($brand as $list)
+                                                    @if ($brand_id == $list->id)
+                                                        <option selected value="{{ $list->id }}">
+                                                        @else
+                                                        <option value="{{ $list->id }}">
+                                                    @endif
+                                                    {{ $list->brand }}</option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="model" class="control-label mb-1">Model</label>
@@ -87,8 +107,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="keywords" class="control-label mb-1">Keywords</label>
-                                    <textarea id="keywords" name="keywords" type="text" class="form-control" aria-required="true" aria-invalid="false"
-                                        required>{{ $keywords }}</textarea>
+                                    <textarea id="keywords" name="keywords" type="text" class="form-control" aria-required="true"
+                                        aria-invalid="false" required>{{ $keywords }}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="technical_specification" class="control-label mb-1">Technical
@@ -123,33 +143,38 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-12" id="product_attr_box">
+                    <div class="col-lg-12">
                         <h3 class="mb10">Product Images</h3>
-                        @php
-                            $loop_count_num = 1;
-                        @endphp
-                        @foreach ($ProductImages as $key => $val)
-                            @php
-                                $loop_count_prev = $loop_count_num;
-                                $pImages = (array) $val;
-                            @endphp
-                            <input id="pimages_id" type="hidden" value="{{ $pImages['id'] }}" name="pimages_id[]">
-                            <div class="card" id="product_images_{{ $loop_count_num++ }}">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <label for="image" class="control-label mb-1">Image</label>
-                                                <input id="image" name="image[]" type="file" class="form-control"
-                                                    aria-required="true" aria-invalid="false" {{ $image_required }}>
-                                                @error('image')
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <div class="row" id="product_image_box">
+                                        @php
+                                            $loop_count_num = 1;
+                                        @endphp
+                                        @foreach ($ProductImages as $key => $val)
+                                            @php
+                                                $loop_count_prev = $loop_count_num;
+                                                $pImages = (array) $val;
+                                            @endphp
+                                            <input id="pimages_id" type="hidden" value="{{ $pImages['id'] }}"
+                                                name="pimages_id[]">
+                                            <div class="col-md-4 product_images_{{ $loop_count_num++ }}">
+                                                <label for="images" class="control-label mb-1">Image</label>
+                                                <input id="images" name="images[]" type="file"
+                                                    class="form-control" aria-required="true" aria-invalid="false"
+                                                    {{ $image_required }}>
+                                                @error('images')
                                                     <div class="alert alert-danger" role="alert">
                                                         {{ $message }}
                                                     </div>
                                                 @enderror
                                                 @if ($pImages['image'] != '')
-                                                    <img width="50px" src="{{ asset('upload/' . $pImages['image']) }}"
-                                                        alt="">
+                                                    <a href="{{ asset('upload/' . $pImages['image']) }}"
+                                                        target="blank"><img
+                                                            width="50px"src="{{ asset('upload/' . $pImages['image']) }}"
+                                                            alt="">
+                                                    </a>
                                                 @endif
                                             </div>
                                             @if ($loop_count_num == 2)
@@ -170,11 +195,11 @@
                                                     </a>
                                                 </div>
                                             @endif
-                                        </div>
+                                        @endforeach
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        </div>
                     </div>
                     <div class="col-lg-12" id="product_attr_box">
                         <h3 class="mb10">Product Attributes</h3>
@@ -340,7 +365,27 @@
 
         function remove_more(loop_count) {
             jQuery('#product_attr_' + loop_count).remove();
-            location.reload();
+            //location.reload();
+        }
+        var loop_image_count = 1;
+
+        function add_image_more() {
+            loop_image_count++;
+            var html =
+                '<input id="pimages_id" type="hidden" value="" name="pimages_id[]"> <div class="col-md-4 product_images_' +
+                loop_image_count +
+                '"><label for="images" class="control-label mb-1">Image</label><input id="images" name="images[]" type="file" class="form-control"aria-required="true" aria-invalid="false" {{ $image_required }}>@error('images')<div class="alert alert-danger" role="alert">{{ $message }}</div>@enderror</div>';
+            html +=
+                '<div class="col-md-2 product_images_' + loop_image_count +
+                '"><label for="images" class="control-label mb-1"></label><button type="button" class="btn btn-danger btn-lg" onclick=remove_more_image("' +
+                loop_image_count + '")><i class="fa fa-minus"></i>&nbsp; Remove</button></div>';
+
+            jQuery('#product_image_box').append(html);
+        }
+
+        function remove_more_image(loop_image_count) {
+            jQuery('.product_images_' + loop_image_count).remove();
+            //location.reload();
         }
     </script>
 

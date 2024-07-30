@@ -71,6 +71,10 @@
                                 <i class="fas fa-tachometer-alt"></i>Color</a>
                         </li>
                         <li>
+                            <a href="{{ route('brand') }}">
+                                <i class="fas fa-tachometer-alt"></i>Brand</a>
+                        </li>
+                        <li>
                             <a href="{{ route('product') }}">
                                 <i class="fas fa-tachometer-alt"></i>Product</a>
                         </li>
@@ -109,6 +113,10 @@
                         <li class="@yield('color_select')">
                             <a href="{{ route('color') }}">
                                 <i class="fas fa-paint-brush"></i>Color</a>
+                        </li>
+                        <li class="@yield('brand_select')">
+                            <a href="{{ route('brand') }}">
+                                <i class="fas fa-window-maximize"></i>Brand</a>
                         </li>
                         <li class="@yield('product_select')">
                             <a href="{{ route('product') }}">
