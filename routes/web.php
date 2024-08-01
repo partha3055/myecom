@@ -7,6 +7,7 @@ use App\Http\Controllers\SizeController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\TaxController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,6 +81,14 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::get('admin/product/status/{type}/{id}', [ProductController::class, 'status'])->name('status');
     Route::get('admin/product/product_attr/delete/{pattr_id}/{id}', [ProductController::class, 'product_attr_delete'])->name('product_attr_delete');
     Route::get('admin/product/product_images/delete/{pimage_id}/{id}', [ProductController::class, 'product_image_delete'])->name('product_image_delete');
+
+    //tax
+    Route::get('admin/tax', [TaxController::class, 'index'])->name('tax');
+    Route::get('admin/tax/manage_tax', [TaxController::class, 'manage_tax'])->name('manage_tax');
+    Route::get('admin/tax/manage_tax/{id}', [TaxController::class, 'manage_tax'])->name('edit');
+    Route::post('admin/tax/manage_tax_process', [TaxController::class, 'manage_tax_process'])->name('tax.manage_tax_process');
+    Route::get('admin/tax/delete/{id}', [TaxController::class, 'delete'])->name('delete');
+    Route::get('admin/tax/status/{type}/{id}', [TaxController::class, 'status'])->name('status');
 
 
     Route::get('admin/logout', function () {

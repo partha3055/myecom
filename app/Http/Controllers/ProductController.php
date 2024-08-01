@@ -32,6 +32,12 @@ class ProductController extends Controller
             $result['technical_specification'] = $arr['0']->technical_specification;
             $result['uses'] = $arr['0']->uses;
             $result['warranty'] = $arr['0']->warranty;
+            $result['lead_time'] = $arr['0']->lead_time;
+            $result['tax_id'] = $arr['0']->tax_id;
+            $result['is_promo'] = $arr['0']->is_promo;
+            $result['is_featured'] = $arr['0']->is_featured;
+            $result['is_discounted'] = $arr['0']->is_discounted;
+            $result['is_tranding'] = $arr['0']->is_tranding;
             $result['id'] = $arr['0']->id;
 
             $result['ProductAttrArr'] = DB::table('products_attr')->where(['product_id' => $id])->get();
@@ -60,6 +66,12 @@ class ProductController extends Controller
             $result['technical_specification'] = '';
             $result['uses'] = '';
             $result['warranty'] = '';
+            $result['lead_time'] = '';
+            $result['tax_id'] = '';
+            $result['is_promo'] = '';
+            $result['is_featured'] = '';
+            $result['is_discounted'] = '';
+            $result['is_tranding'] = '';
             $result['id'] = 0;
 
             $result['ProductAttrArr'][0]['id'] = '';
@@ -83,6 +95,7 @@ class ProductController extends Controller
         $result['size'] = DB::table('sizes')->where(['status' => 1])->get();
         $result['color'] = DB::table('colors')->where(['status' => 1])->get();
         $result['brand'] = DB::table('brands')->where(['status' => 1])->get();
+        $result['tax'] = DB::table('taxes')->where(['status' => 1])->get();
 
         // echo '<pre>';
         // print_r($result);
@@ -157,6 +170,12 @@ class ProductController extends Controller
         $model->technical_specification = $request->post('technical_specification');
         $model->uses = $request->post('uses');
         $model->warranty = $request->post('warranty');
+        $model->lead_time = $request->post('lead_time');
+        $model->tax_id = $request->post('tax_id');
+        $model->is_promo = $request->post('is_promo');
+        $model->is_featured = $request->post('is_featured');
+        $model->is_discounted = $request->post('is_discounted');
+        $model->is_tranding = $request->post('is_tranding');
         $model->status = 1;
         //dd($model);
         $model->save();
@@ -172,9 +191,9 @@ class ProductController extends Controller
             $ProductAttrArr['color_id'] = $color_idAttr[$key];
             $ProductAttrArr['sku'] = $skuAttr[$key];
             // $ProductAttrArr['attr_image'] = 'p';
-            $ProductAttrArr['mrp'] = $mrpAttr[$key];
-            $ProductAttrArr['price'] = $priceAttr[$key];
-            $ProductAttrArr['qty'] = $qtyAttr[$key];
+            $ProductAttrArr['mrp'] = (int)$mrpAttr[$key];
+            $ProductAttrArr['price'] = (int)$priceAttr[$key];
+            $ProductAttrArr['qty'] = (int)$qtyAttr[$key];
             //$ProductAttrArr['id'] = $pAttr[$key];
             //dd($ProductAttrArr['id']);
 

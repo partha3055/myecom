@@ -78,6 +78,10 @@
                             <a href="{{ route('product') }}">
                                 <i class="fas fa-tachometer-alt"></i>Product</a>
                         </li>
+                        <li>
+                            <a href="{{ route('tax') }}">
+                                <i class="fas fa-tachometer-alt"></i>Tax</a>
+                        </li>
                     </ul>
                 </div>
             </nav>
@@ -121,6 +125,10 @@
                         <li class="@yield('product_select')">
                             <a href="{{ route('product') }}">
                                 <i class="fas fa-tachometer-alt"></i>Product</a>
+                        </li>
+                        <li class="@yield('tax_select')">
+                            <a href="{{ route('tax') }}">
+                                <i class="fas fa-window-maximize"></i>Tax</a>
                         </li>
                     </ul>
                 </nav>

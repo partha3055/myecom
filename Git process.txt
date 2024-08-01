@@ -33,6 +33,9 @@ git push
 
 cp .env.example .env
 
+partha.floranet@gmail.com
+$2y$10$4tY730ReWXVQdkWCo0jFv.wGsT/83R6Pg8IrMpvKKJ3MrvTv3yhtK
+
 
 
 		

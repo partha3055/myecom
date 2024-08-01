@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -21,12 +22,21 @@ class CategoryController extends Controller
 
             $result['category_name'] = $arr['0']->category_name;
             $result['category_slug'] = $arr['0']->category_slug;
+            $result['parent_category_id'] = $arr['0']->parent_category_id;
+            $result['category_image'] = $arr['0']->category_image;
             $result['id'] = $arr['0']->id;
+
+            //$result['category'] = DB::table('categories')->where(['status' => 1])->where(['id', '!=', $id])->get();
         } else {
             $result['category_name'] = '';
             $result['category_slug'] = '';
+            $result['parent_category_id'] = '';
+            $result['category_image'] = '';
             $result['id'] = 0;
         }
+
+        $result['category'] = DB::table('categories')->where(['status' => 1])->get();
+
         // echo '<pre>';
         // print_r($result);
         // die();
@@ -36,10 +46,17 @@ class CategoryController extends Controller
     public function manage_category_process(Request $request)
     {
         //return $request->post();
+        if ($request->post('id')) {
+            $image_validation = "mimes:jpeg,jpg,png,webp";
+        } else {
+            $image_validation = "required|mimes:jpeg,jpg,png,webp";
+        }
+
         $request->validate([
             'category_name' => 'required',
             //ignore category_slug with corrospondence "$request->post('id')"->this id.
             'category_slug' => 'required|unique:categories,category_slug,' . $request->post('id'),
+            'category_image' => $image_validation,
         ]);
         if ($request->post('id')) {
             $model = Category::find($request->post('id'));
@@ -49,9 +66,20 @@ class CategoryController extends Controller
             $msg = "Category created successfully";
         }
 
+        if ($request->hasFile('category_image')) {
+            $image = $request->file('category_image');
+            //dd($image);
+            $ext = $image->extension();
+            //dd($ext);
+            $image_name = time() . '_cat_img' . '.' . $ext;
+            $image->move('upload', $image_name);
+            $model->category_image = $image_name;
+        }
+
         //$model = new Category();
         $model->category_name = $request->post('category_name');
         $model->category_slug = $request->post('category_slug');
+        $model->parent_category_id = $request->post('parent_category_id');
         $model->status = 1;
         //dd($model);
         $model->save();
