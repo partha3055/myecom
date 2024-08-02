@@ -32,7 +32,8 @@
                                 <td>{{ $list->category_name }}</td>
                                 <td>{{ $list->category_slug }}</td>
                                 @if ($list->category_image != '')
-                                    <td><img width="50px" src="{{ asset('upload/' . $list->category_image) }}"
+                                    <td><img width="50px"
+                                            src="{{ asset('storage/upload/category_images/' . $list->category_image) }}"
                                             alt=""></td>
                                 @endif
                                 <td>

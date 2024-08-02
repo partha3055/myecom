@@ -32,7 +32,9 @@
                                 <td>{{ $list->name }}</td>
                                 <td>{{ $list->slug }}</td>
                                 @if ($list->image != '')
-                                    <td><img width="50px" src="{{ asset('upload/' . $list->image) }}" alt=""></td>
+                                    <td><img width="50px"
+                                            src="{{ asset('storage/upload/Product_Image/' . $list->image) }}"
+                                            alt=""></td>
                                 @endif
                                 <td>
                                     <a href="{{ url('admin/product/manage_product/') }}/{{ $list->id }}"><button

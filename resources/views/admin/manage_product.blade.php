@@ -266,7 +266,8 @@
                                     @enderror
                                     @if ($image != '')
                                         {{-- <input type="text" value="{{ $image }}"> --}}
-                                        <img width="50px" src="{{ asset('upload/' . $image) }}" alt=""></td>
+                                        <img width="50px" src="{{ asset('storage/upload/Product_Image/' . $image) }}"
+                                            alt=""></td>
                                     @endif
                                 </div>
                             </div>
@@ -299,9 +300,9 @@
                                                     </div>
                                                 @enderror
                                                 @if ($pImages['image'] != '')
-                                                    <a href="{{ asset('upload/' . $pImages['image']) }}"
+                                                    <a href="{{ asset('storage/upload/product_images/' . $pImages['image']) }}"
                                                         target="blank"><img
-                                                            width="50px"src="{{ asset('upload/' . $pImages['image']) }}"
+                                                            width="50px"src="{{ asset('storage/upload/product_images/' . $pImages['image']) }}"
                                                             alt="">
                                                     </a>
                                                 @endif

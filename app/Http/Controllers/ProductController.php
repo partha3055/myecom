@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -148,12 +149,18 @@ class ProductController extends Controller
             $msg = "product created successfully";
         }
         if ($request->hasFile('image')) {
+            if ($request->post('id')) {
+                $productImage = DB::table('products')->where(['id' => $request->post('id')])->get();
+                //dd($catImage[0]->category_image);
+                if (Storage::exists('public/upload/Product_Image/' . $productImage[0]->image)) {
+                    //dd($catImage[0]->category_image);
+                    Storage::delete('public/upload/Product_Image/' . $productImage[0]->image);
+                }
+            }
             $image = $request->file('image');
-            //dd($image);
             $ext = $image->extension();
-            //dd($ext);
             $image_name = time() . '.' . $ext;
-            $image->move('upload', $image_name);
+            $image->storeAs('/public/upload/Product_Image/', $image_name);
             $model->image = $image_name;
         }
 
@@ -227,7 +234,7 @@ class ProductController extends Controller
                 //dd("attr_image.$key");
                 $ext = $image->extension();
                 $image_name = time() . $rand . '_image' . '.' . $ext;
-                $request->file("images.$key")->move('upload', $image_name);
+                $request->file("images.$key")->storeAs('/public/upload/product_images/', $image_name);
                 $ProductImages['image'] = $image_name;
             }
             if ($pImages[$key] != '') {
@@ -249,6 +256,12 @@ class ProductController extends Controller
     {
         //echo $id;
         $model = Product::find($id);
+        $productImage = DB::table('products')->where(['id' => $id])->get();
+        //dd($catImage[0]->category_image);
+        if (Storage::exists('public/upload/Product_Image/' . $productImage[0]->image)) {
+            //dd($catImage[0]->category_image);
+            Storage::delete('public/upload/Product_Image/' . $productImage[0]->image);
+        }
         $model->delete();
         DB::table('products_attr')->where(['product_id' => $id])->delete();
         DB::table('product_images')->where(['product_id' => $id])->delete();
@@ -266,6 +279,11 @@ class ProductController extends Controller
     public function product_image_delete(Request $request, $pimage_id, $id)
     {
         //dd($pattr_id);
+        $arrImage = DB::table('product_images')->where(['id' => $pimage_id])->get();
+        //dd($arrImage[0]->image);
+        if (Storage::exists('public/upload/product_images/' . $arrImage[0]->image)) {
+            Storage::delete('public/upload/product_images/' . $arrImage[0]->image);
+        }
         DB::table('product_images')->where(['id' => $pimage_id])->delete();
         return redirect('admin/product/manage_product/' . $id);
     }

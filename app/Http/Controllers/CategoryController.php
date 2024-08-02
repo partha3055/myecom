@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -67,12 +68,22 @@ class CategoryController extends Controller
         }
 
         if ($request->hasFile('category_image')) {
+            if ($request->post('id')) {
+                $catImage = DB::table('categories')->where(['id' => $request->post('id')])->get();
+                //dd($catImage[0]->category_image);
+                if (Storage::exists('public/upload/category_images/' . $catImage[0]->category_image)) {
+                    //dd($catImage[0]->category_image);
+                    Storage::delete('public/upload/category_images/' . $catImage[0]->category_image);
+                }
+            }
             $image = $request->file('category_image');
             //dd($image);
             $ext = $image->extension();
             //dd($ext);
             $image_name = time() . '_cat_img' . '.' . $ext;
-            $image->move('upload', $image_name);
+            //dd($image_name);
+            $image->storeAs('/public/upload/category_images/', $image_name);
+            //dd($image);
             $model->category_image = $image_name;
         }
 
@@ -92,6 +103,12 @@ class CategoryController extends Controller
     {
         //echo $id;
         $model = Category::find($id);
+        $catImage = DB::table('categories')->where(['id' => $id])->get();
+        //dd($catImage[0]->category_image);
+        if (Storage::exists('public/upload/category_images/' . $catImage[0]->category_image)) {
+            //dd($catImage[0]->category_image);
+            Storage::delete('public/upload/category_images/' . $catImage[0]->category_image);
+        }
         $model->delete();
         $request->session()->flash('message', 'Category deleted successfully');
         return redirect('admin/category');
