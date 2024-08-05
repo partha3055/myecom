@@ -266,8 +266,11 @@
                                     @enderror
                                     @if ($image != '')
                                         {{-- <input type="text" value="{{ $image }}"> --}}
-                                        <img width="50px" src="{{ asset('storage/upload/Product_Image/' . $image) }}"
-                                            alt=""></td>
+                                        <a href="{{ asset('storage/upload/Product_Image/' . $image) }}" target="blank">
+                                            <img width="50px"
+                                                src="{{ asset('storage/upload/Product_Image/' . $image) }}"
+                                                alt=""></td>
+                                        </a>
                                     @endif
                                 </div>
                             </div>
@@ -413,9 +416,12 @@
                                                     </div>
                                                 @enderror
                                                 @if ($pArr['attr_image'] != '')
-                                                    <img width="50px"
-                                                        src="{{ asset('upload/' . $pArr['attr_image']) }}"
-                                                        alt="">
+                                                    <a
+                                                        href="{{ asset('storage/upload/product_attribute_images/' . $pArr['attr_image']) }}"target="blank">
+                                                        <img width="50px"
+                                                            src="{{ asset('storage/upload/product_attribute_images/' . $pArr['attr_image']) }}"
+                                                            alt="">
+                                                    </a>
                                                 @endif
                                             </div>
                                             @if ($loop_count_num == 2)

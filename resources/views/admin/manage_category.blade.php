@@ -26,7 +26,7 @@
                                     <label for="parent_category_id" class="control-label mb-1">Parent Category</label>
                                     <select id="parent_category_id" name="parent_category_id" type="text"
                                         class="form-control" aria-required="true" aria-invalid="false">
-                                        <option value="">Select Category</option>
+                                        <option value="0">Select Category</option>
                                         @foreach ($category as $list)
                                             @if ($parent_category_id == $list->id)
                                                 <option selected value="{{ $list->id }}">
@@ -64,9 +64,17 @@
                                         </div>
                                     @enderror
                                     @if ($category_image != '')
-                                        <img width="50px" src="{{ asset('upload/' . $category_image) }}" alt="">
-                                        </td>
+                                        <a
+                                            href="{{ asset('storage/upload/category_images/' . $category_image) }}"target="blank">
+                                            <img width="50px"
+                                                src="{{ asset('storage/upload/category_images/' . $category_image) }}"
+                                                alt="">
+                                        </a>
                                     @endif
+                                </div>
+                                <div class="form-group">
+                                    <label for="is_home" class="control-label mb-1">Show in Home Page</label>
+                                    <input id="is_home" name="is_home" type="checkbox" {{ $is_home_selected }}>
                                 </div>
                                 <div>
                                     <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">

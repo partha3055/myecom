@@ -47,8 +47,10 @@
                                         </div>
                                     @enderror
                                     @if ($bimage != '')
-                                        {{-- <input type="text" value="{{ $image }}"> --}}
-                                        <img width="50px" src="{{ asset('upload/' . $bimage) }}" alt=""></td>
+                                        <a href="{{ asset('storage/upload/brand_images/' . $bimage) }}"target="blank">
+                                            <img width="50px" src="{{ asset('storage/upload/brand_images/' . $bimage) }}"
+                                                alt="">
+                                        </a>
                                     @endif
                                 </div>
                                 <div>

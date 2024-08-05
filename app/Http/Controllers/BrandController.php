@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BrandController extends Controller
 {
@@ -56,12 +58,21 @@ class BrandController extends Controller
 
         //$model = new brand();
         if ($request->hasFile('bimage')) {
+
+            if ($request->post('id')) {
+                $brandImage = DB::table('brands')->where(['id' => $request->post('id')])->get();
+                //dd($catImage[0]->category_image);
+                if (Storage::exists('public/upload/brand_images/' . $brandImage[0]->image)) {
+                    //dd($catImage[0]->category_image);
+                    Storage::delete('public/upload/brand_images/' . $brandImage[0]->image);
+                }
+            }
             $image = $request->file('bimage');
             //dd($image);
             $ext = $image->extension();
             //dd($ext);
             $image_name = time() . '_brand' . '.' . $ext;
-            $image->move('upload', $image_name);
+            $image->storeAs('/public/upload/brand_images/', $image_name);
             $model->image = $image_name;
         }
 
@@ -78,6 +89,12 @@ class BrandController extends Controller
     {
         //echo $id;
         $model = Brand::find($id);
+        $brandImage = DB::table('brands')->where(['id' => $id])->get();
+        //dd($catImage[0]->category_image);
+        if (Storage::exists('public/upload/brand_images/' . $brandImage[0]->image)) {
+            //dd($catImage[0]->category_image);
+            Storage::delete('public/upload/brand_images/' . $brandImage[0]->image);
+        }
         $model->delete();
         $request->session()->flash('message', 'brand deleted successfully');
         return redirect('admin/brand');

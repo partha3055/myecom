@@ -8,6 +8,7 @@ use App\Http\Controllers\ColorController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\TaxController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -89,6 +90,14 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::post('admin/tax/manage_tax_process', [TaxController::class, 'manage_tax_process'])->name('tax.manage_tax_process');
     Route::get('admin/tax/delete/{id}', [TaxController::class, 'delete'])->name('delete');
     Route::get('admin/tax/status/{type}/{id}', [TaxController::class, 'status'])->name('status');
+
+    //customer
+    Route::get('admin/customer', [CustomerController::class, 'index'])->name('customer');
+    Route::get('admin/customer/manage_customer', [CustomerController::class, 'manage_customer'])->name('manage_customer');
+    Route::get('admin/customer/manage_customer/{id}', [CustomerController::class, 'manage_customer'])->name('edit');
+    Route::post('admin/customer/manage_customer_process', [CustomerController::class, 'manage_customer_process'])->name('customer.manage_customer_process');
+    Route::get('admin/customer/delete/{id}', [CustomerController::class, 'delete'])->name('delete');
+    Route::get('admin/customer/status/{type}/{id}', [CustomerController::class, 'status'])->name('status');
 
 
     Route::get('admin/logout', function () {

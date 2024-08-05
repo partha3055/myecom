@@ -30,7 +30,13 @@
                                 <td>{{ $list->id }}</td>
                                 <td>{{ $list->brand }}</td>
                                 @if ($list->image != '')
-                                    <td><img width="50px" src="{{ asset('upload/' . $list->image) }}" alt=""></td>
+                                    <td>
+                                        <a href="{{ asset('storage/upload/brand_images/' . $list->image) }}"target="blank">
+                                            <img width="50px"
+                                                src="{{ asset('storage/upload/brand_images/' . $list->image) }}"
+                                                alt="">
+                                        </a>
+                                    </td>
                                 @endif
                                 <td>
                                     <a href="{{ url('admin/brand/manage_brand/') }}/{{ $list->id }}"><button
