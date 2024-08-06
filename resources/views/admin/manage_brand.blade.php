@@ -53,6 +53,10 @@
                                         </a>
                                     @endif
                                 </div>
+                                <div class="form-group">
+                                    <label for="is_home" class="control-label mb-1">Show in Home Page</label>
+                                    <input id="is_home" name="is_home" type="checkbox" {{ $is_home_selected }}>
+                                </div>
                                 <div>
                                     <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                                         Submit
