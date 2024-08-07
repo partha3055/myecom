@@ -295,8 +295,7 @@
                                             <div class="col-md-4 product_images_{{ $loop_count_num++ }}">
                                                 <label for="images" class="control-label mb-1">Image</label>
                                                 <input id="images" name="images[]" type="file"
-                                                    class="form-control" aria-required="true" aria-invalid="false"
-                                                    {{ $image_required }}>
+                                                    class="form-control" aria-required="true" aria-invalid="false">
                                                 @error('images')
                                                     <div class="alert alert-danger" role="alert">
                                                         {{ $message }}
@@ -408,8 +407,7 @@
                                             <div class="col-md-6">
                                                 <label for="attr_image" class="control-label mb-1">Image</label>
                                                 <input id="attr_image" name="attr_image[]" type="file"
-                                                    class="form-control" aria-required="true" aria-invalid="false"
-                                                    {{ $image_required }}>
+                                                    class="form-control" aria-required="true" aria-invalid="false">
                                                 @error('attr_image')
                                                     <div class="alert alert-danger" role="alert">
                                                         {{ $message }}
@@ -490,7 +488,7 @@
             html +=
                 '<div class="col-md-3"><label for="qty" class="control-label mb-1">Qty</label><input id="qty" value="" name="qty[]" type="text"class="form-control" aria-required="true" aria-invalid="false" required></div>';
             html +=
-                '<div class="col-md-6"><label for="attr_image" class="control-label mb-1">Image</label><input id="attr_image" name="attr_image[]" type="file" class="form-control"aria-required="true" aria-invalid="false" {{ $image_required }}>@error('attr_image')<div class="alert alert-danger" role="alert">{{ $message }}</div>@enderror</div>';
+                '<div class="col-md-6"><label for="attr_image" class="control-label mb-1">Image</label><input id="attr_image" name="attr_image[]" type="file" class="form-control"aria-required="true" aria-invalid="false">@error('attr_image')<div class="alert alert-danger" role="alert">{{ $message }}</div>@enderror</div>';
             html +=
                 '<div class="col-md-2"><label for="attr_image" class="control-label mb-1"></label><button type="button" class="btn btn-danger btn-lg" onclick=remove_more("' +
                 loop_count + '")><i class="fa fa-minus"></i>&nbsp; Remove</button></div>';
@@ -510,7 +508,7 @@
             var html =
                 '<input id="pimages_id" type="hidden" value="" name="pimages_id[]"> <div class="col-md-4 product_images_' +
                 loop_image_count +
-                '"><label for="images" class="control-label mb-1">Image</label><input id="images" name="images[]" type="file" class="form-control"aria-required="true" aria-invalid="false" {{ $image_required }}>@error('images')<div class="alert alert-danger" role="alert">{{ $message }}</div>@enderror</div>';
+                '"><label for="images" class="control-label mb-1">Image</label><input id="images" name="images[]" type="file" class="form-control"aria-required="true" aria-invalid="false">@error('images')<div class="alert alert-danger" role="alert">{{ $message }}</div>@enderror</div>';
             html +=
                 '<div class="col-md-2 product_images_' + loop_image_count +
                 '"><label for="images" class="control-label mb-1"></label><button type="button" class="btn btn-danger btn-lg" onclick=remove_more_image("' +
