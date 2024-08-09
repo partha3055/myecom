@@ -7,68 +7,22 @@
                 <div class="seq-screen">
                     <ul class="seq-canvas">
                         <!-- single slide item -->
-                        <li>
-                            <div class="seq-model">
-                                <img data-seq src="{{ asset('front_assets/img/slider/1.jpg') }}" alt="Men slide img" />
-                            </div>
-                            <div class="seq-title">
-                                <span data-seq>Save Up to 75% Off</span>
-                                <h2 data-seq>Men Collection</h2>
-                                <p data-seq>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, illum.</p>
-                                <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
-                            </div>
-                        </li>
-                        <!-- single slide item -->
-                        <li>
-                            <div class="seq-model">
-                                <img data-seq src="{{ asset('front_assets/img/slider/2.jpg') }}"
-                                    alt="Wristwatch slide img" />
-                            </div>
-                            <div class="seq-title">
-                                <span data-seq>Save Up to 40% Off</span>
-                                <h2 data-seq>Wristwatch Collection</h2>
-                                <p data-seq>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, illum.</p>
-                                <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
-                            </div>
-                        </li>
-                        <!-- single slide item -->
-                        <li>
-                            <div class="seq-model">
-                                <img data-seq src="{{ asset('front_assets/img/slider/3.jpg') }}"
-                                    alt="Women Jeans slide img" />
-                            </div>
-                            <div class="seq-title">
-                                <span data-seq>Save Up to 75% Off</span>
-                                <h2 data-seq>Jeans Collection</h2>
-                                <p data-seq>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, illum.</p>
-                                <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
-                            </div>
-                        </li>
-                        <!-- single slide item -->
-                        <li>
-                            <div class="seq-model">
-                                <img data-seq src="{{ asset('front_assets/img/slider/4.jpg') }}" alt="Shoes slide img" />
-                            </div>
-                            <div class="seq-title">
-                                <span data-seq>Save Up to 75% Off</span>
-                                <h2 data-seq>Exclusive Shoes</h2>
-                                <p data-seq>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, illum.</p>
-                                <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
-                            </div>
-                        </li>
-                        <!-- single slide item -->
-                        <li>
-                            <div class="seq-model">
-                                <img data-seq src="{{ asset('front_assets/img/slider/5.jpg') }}"
-                                    alt="Male Female slide img" />
-                            </div>
-                            <div class="seq-title">
-                                <span data-seq>Save Up to 50% Off</span>
-                                <h2 data-seq>Best Collection</h2>
-                                <p data-seq>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, illum.</p>
-                                <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
-                            </div>
-                        </li>
+                        @foreach ($home_banners as $list)
+                            <li>
+                                <div class="seq-model">
+                                    <img data-seq src="{{ asset('storage/upload/homebanner_images/' . $list->image) }}"
+                                        alt="Men slide img" />
+                                </div>
+                                <div class="seq-title">
+                                    <span data-seq>Save Up to 75% Off</span>
+                                    <h2 data-seq>Men Collection</h2>
+                                    <p data-seq>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, illum.</p>
+                                    <a data-seq target="_blank" href="{{ $list->btn_link }}"
+                                        class="aa-shop-now-btn aa-secondary-btn">SHOP
+                                        NOW</a>
+                                </div>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
                 <!-- slider navigation btn -->
@@ -168,21 +122,36 @@
                                         <div class="tab-pane fade {{ $cat_class }}" id="cat{{ $list->id }}">
                                             <ul class="aa-product-catg">
                                                 <!-- start single product item -->
-                                                <li>
-                                                    <figure>
-                                                        <a class="aa-product-img" href="#"><img
-                                                                src="{{ asset('front_assets/img/man/polo-shirt-2.png') }}"
-                                                                alt="polo shirt img"></a>
-                                                        <a class="aa-add-card-btn"href="#"><span
-                                                                class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                        <figcaption>
-                                                            <h4 class="aa-product-title"><a href="#">Polo
-                                                                    T-Shirt</a></h4>
-                                                            <span class="aa-product-price">$45.50</span><span
-                                                                class="aa-product-price"><del>$65.50</del></span>
-                                                        </figcaption>
-                                                    </figure>
-                                                </li>
+                                                @if (isset($home_category_products[$list->id][0]))
+                                                    @foreach ($home_category_products[$list->id] as $product)
+                                                        <li>
+                                                            <figure>
+                                                                <a class="aa-product-img"
+                                                                    href="{{ url('product/' . $product->slug) }}"><img
+                                                                        src="{{ asset('storage/upload/Product_Image/' . $product->image) }}"
+                                                                        alt="{{ $product->name }}"></a>
+                                                                <a
+                                                                    class="aa-add-card-btn"href="{{ url('product/' . $product->slug) }}"><span
+                                                                        class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                                <figcaption>
+                                                                    <h4 class="aa-product-title"><a
+                                                                            href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
+                                                                    </h4>
+                                                                    <span class="aa-product-price">Rs
+                                                                        {{ $home_product_attr[$product->id][0]->price }}</span><span
+                                                                        class="aa-product-price"><del>Rs
+                                                                            {{ $home_product_attr[$product->id][0]->mrp }}</del></span>
+                                                                </figcaption>
+                                                            </figure>
+                                                        </li>
+                                                    @endforeach
+                                                @else
+                                                    <li>
+                                                        <figure>
+                                                            No Data Found
+                                                        </figure>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     @endforeach
@@ -220,80 +189,123 @@
                         <div class="aa-popular-category-area">
                             <!-- start prduct navigation -->
                             <ul class="nav nav-tabs aa-products-tab">
-                                <li class="active"><a href="#popular" data-toggle="tab">Popular</a></li>
-                                <li><a href="#featured" data-toggle="tab">Featured</a></li>
-                                <li><a href="#latest" data-toggle="tab">Latest</a></li>
+                                <li class="active"><a href="#featured" data-toggle="tab">Featured</a></li>
+                                <li><a href="#discounted" data-toggle="tab">Discounted</a></li>
+                                <li><a href="#tranding" data-toggle="tab">Tranding</a></li>
                             </ul>
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <!-- Start men popular category -->
-                                <div class="tab-pane fade in active" id="popular">
-                                    <ul class="aa-product-catg aa-popular-slider">
-                                        <!-- start single product item -->
-                                        <li>
-                                            <figure>
-                                                <a class="aa-product-img" href="#"><img
-                                                        src="{{ asset('front_assets/img/man/polo-shirt-2.png') }}"
-                                                        alt="polo shirt img"></a>
-                                                <a class="aa-add-card-btn"href="#"><span
-                                                        class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">Polo T-Shirt</a>
-                                                    </h4>
-                                                    <span class="aa-product-price">$45.50</span><span
-                                                        class="aa-product-price"><del>$65.50</del></span>
-                                                </figcaption>
-                                            </figure>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- / popular product category -->
-
                                 <!-- start featured product category -->
                                 <div class="tab-pane fade" id="featured">
                                     <ul class="aa-product-catg aa-featured-slider">
                                         <!-- start single product item -->
-                                        <li>
-                                            <figure>
-                                                <a class="aa-product-img" href="#"><img
-                                                        src="{{ asset('front_assets/img/man/polo-shirt-2.png') }}"
-                                                        alt="polo shirt img"></a>
-                                                <a class="aa-add-card-btn"href="#"><span
-                                                        class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">Polo T-Shirt</a>
-                                                    </h4>
-                                                    <span class="aa-product-price">$45.50</span><span
-                                                        class="aa-product-price"><del>$65.50</del></span>
-                                                </figcaption>
-                                            </figure>
-                                        </li>
+                                        @if (isset($home_featured_products[$list->id][0]))
+                                            @foreach ($home_featured_products[$list->id] as $product)
+                                                <li>
+                                                    <figure>
+                                                        <a class="aa-product-img"
+                                                            href="{{ url('product/' . $product->slug) }}"><img
+                                                                src="{{ asset('storage/upload/Product_Image/' . $product->image) }}"
+                                                                alt="{{ $product->name }}"></a>
+                                                        <a
+                                                            class="aa-add-card-btn"href="{{ url('product/' . $product->slug) }}"><span
+                                                                class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                        <figcaption>
+                                                            <h4 class="aa-product-title"><a
+                                                                    href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
+                                                            </h4>
+                                                            <span class="aa-product-price">Rs
+                                                                {{ $home_featured_product_attr[$product->id][0]->price }}</span><span
+                                                                class="aa-product-price"><del>Rs
+                                                                    {{ $home_featured_product_attr[$product->id][0]->mrp }}</del></span>
+                                                        </figcaption>
+                                                    </figure>
+                                                </li>
+                                            @endforeach
+                                        @else
+                                            <li>
+                                                <figure>
+                                                    No Data Found
+                                                </figure>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                                 <!-- / featured product category -->
-
                                 <!-- start latest product category -->
-                                <div class="tab-pane fade" id="latest">
-                                    <ul class="aa-product-catg aa-latest-slider">
+                                <div class="tab-pane fade" id="discounted">
+                                    <ul class="aa-product-catg aa-discounted-slider">
                                         <!-- start single product item -->
-                                        <li>
-                                            <figure>
-                                                <a class="aa-product-img" href="#"><img
-                                                        src="{{ asset('front_assets/img/man/polo-shirt-2.png') }}"
-                                                        alt="polo shirt img"></a>
-                                                <a class="aa-add-card-btn"href="#"><span
-                                                        class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">Polo T-Shirt</a>
-                                                    </h4>
-                                                    <span class="aa-product-price">$45.50</span><span
-                                                        class="aa-product-price"><del>$65.50</del></span>
-                                                </figcaption>
-                                            </figure>
-                                        </li>
+                                        @if (isset($home_discounted_products[$list->id][0]))
+                                            @foreach ($home_discounted_products[$list->id] as $product)
+                                                <li>
+                                                    <figure>
+                                                        <a class="aa-product-img"
+                                                            href="{{ url('product/' . $product->slug) }}"><img
+                                                                src="{{ asset('storage/upload/Product_Image/' . $product->image) }}"
+                                                                alt="{{ $product->name }}"></a>
+                                                        <a
+                                                            class="aa-add-card-btn"href="{{ url('product/' . $product->slug) }}"><span
+                                                                class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                        <figcaption>
+                                                            <h4 class="aa-product-title"><a
+                                                                    href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
+                                                            </h4>
+                                                            <span class="aa-product-price">Rs
+                                                                {{ $home_discounted_product_attr[$product->id][0]->price }}</span><span
+                                                                class="aa-product-price"><del>Rs
+                                                                    {{ $home_discounted_product_attr[$product->id][0]->mrp }}</del></span>
+                                                        </figcaption>
+                                                    </figure>
+                                                </li>
+                                            @endforeach
+                                        @else
+                                            <li>
+                                                <figure>
+                                                    No Data Found
+                                                </figure>
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                                 <!-- / latest product category -->
+                                <!-- Start men popular category -->
+                                <div class="tab-pane fade in active" id="tranding">
+                                    <ul class="aa-product-catg aa-tranding-slider">
+                                        <!-- start single product item -->
+                                        @if (isset($home_tranding_products[$list->id][0]))
+                                            @foreach ($home_tranding_products[$list->id] as $product)
+                                                <li>
+                                                    <figure>
+                                                        <a class="aa-product-img"
+                                                            href="{{ url('product/' . $product->slug) }}"><img
+                                                                src="{{ asset('storage/upload/Product_Image/' . $product->image) }}"
+                                                                alt="{{ $product->name }}"></a>
+                                                        <a
+                                                            class="aa-add-card-btn"href="{{ url('product/' . $product->slug) }}"><span
+                                                                class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                        <figcaption>
+                                                            <h4 class="aa-product-title"><a
+                                                                    href="{{ url('product/' . $product->slug) }}">{{ $product->name }}</a>
+                                                            </h4>
+                                                            <span class="aa-product-price">Rs
+                                                                {{ $home_tranding_product_attr[$product->id][0]->price }}</span><span
+                                                                class="aa-product-price"><del>Rs
+                                                                    {{ $home_tranding_product_attr[$product->id][0]->mrp }}</del></span>
+                                                        </figcaption>
+                                                    </figure>
+                                                </li>
+                                            @endforeach
+                                        @else
+                                            <li>
+                                                <figure>
+                                                    No Data Found
+                                                </figure>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                                <!-- / popular product category -->
                             </div>
                         </div>
                     </div>
@@ -502,9 +514,11 @@
                 <div class="col-md-12">
                     <div class="aa-client-brand-area">
                         <ul class="aa-client-brand-slider">
-                            <li><a href="#"><img
-                                        src="{{ asset('front_assets/img/client-brand-java.png') }}"alt="java img"></a>
-                            </li>
+                            @foreach ($home_brands as $list)
+                                <li><a href="#"><img
+                                            src="{{ asset('storage/upload/brand_images/' . $list->image) }}"alt="{{ $list->brand }}"></a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>

@@ -75,6 +75,10 @@
                                 <i class="fas fa-tachometer-alt"></i>Brand</a>
                         </li>
                         <li>
+                            <a href="{{ route('homebanner') }}">
+                                <i class="fas fa-tachometer-alt"></i>Home Banner</a>
+                        </li>
+                        <li>
                             <a href="{{ route('product') }}">
                                 <i class="fas fa-tachometer-alt"></i>Product</a>
                         </li>
@@ -125,6 +129,10 @@
                         <li class="@yield('brand_select')">
                             <a href="{{ route('brand') }}">
                                 <i class="fas fa-window-maximize"></i>Brand</a>
+                        </li>
+                        <li class="@yield('homebanner_select')">
+                            <a href="{{ route('homebanner') }}">
+                                <i class="fas fa-window-maximize"></i>Home Banner</a>
                         </li>
                         <li class="@yield('product_select')">
                             <a href="{{ route('product') }}">

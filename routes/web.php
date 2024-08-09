@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\HomeBannerController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\CustomerController;
@@ -75,6 +76,14 @@ Route::group(['middleware' => 'admin_auth'], function () {
     Route::post('admin/brand/manage_brand_process', [BrandController::class, 'manage_brand_process'])->name('brand.manage_brand_process');
     Route::get('admin/brand/delete/{id}', [BrandController::class, 'delete'])->name('delete');
     Route::get('admin/brand/status/{type}/{id}', [BrandController::class, 'status'])->name('status');
+
+    //homebanner
+    Route::get('admin/homebanner', [HomeBannerController::class, 'index'])->name('homebanner');
+    Route::get('admin/homebanner/manage_homebanner', [HomeBannerController::class, 'manage_homebanner'])->name('manage_homebanner');
+    Route::get('admin/homebanner/manage_homebanner/{id}', [HomeBannerController::class, 'manage_homebanner'])->name('edit');
+    Route::post('admin/homebanner/manage_homebanner_process', [HomeBannerController::class, 'manage_homebanner_process'])->name('homebanner.manage_homebanner_process');
+    Route::get('admin/homebanner/delete/{id}', [HomeBannerController::class, 'delete'])->name('delete');
+    Route::get('admin/homebanner/status/{type}/{id}', [HomeBannerController::class, 'status'])->name('status');
 
     //product
     Route::get('admin/product', [ProductController::class, 'index'])->name('product');

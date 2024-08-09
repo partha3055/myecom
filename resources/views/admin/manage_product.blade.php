@@ -160,21 +160,38 @@
                                                     <label class=" form-control-label">Promo</label>
                                                 </div>
                                                 <div class="col col-md-9">
-                                                    {{-- @if ($is_promo == '1') --}}
-                                                    <div class="form-check">
-                                                        <div class="radio">
-                                                            <label for="is_promo1" class="form-check-label ">
-                                                                <input type="radio" id="is_promo1" name="is_promo"
-                                                                    value="1" class="form-check-input" checked>Yes
-                                                            </label>
+                                                    @if ($is_promo == '1')
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_promo1" class="form-check-label ">
+                                                                    <input type="radio" id="is_promo1" name="is_promo"
+                                                                        value="1" class="form-check-input"
+                                                                        checked>Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_promo2" class="form-check-label ">
+                                                                    <input type="radio" id="is_promo2" name="is_promo"
+                                                                        value="0" class="form-check-input">No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                        <div class="radio">
-                                                            <label for="is_promo2" class="form-check-label ">
-                                                                <input type="radio" id="is_promo2" name="is_promo"
-                                                                    value="0" class="form-check-input">No
-                                                            </label>
+                                                    @else
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_promo1" class="form-check-label ">
+                                                                    <input type="radio" id="is_promo1" name="is_promo"
+                                                                        value="1" class="form-check-input">Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_promo2" class="form-check-label ">
+                                                                    <input type="radio" id="is_promo2" name="is_promo"
+                                                                        value="0" class="form-check-input" checked>No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -184,22 +201,41 @@
                                                     <label class=" form-control-label">Featured</label>
                                                 </div>
                                                 <div class="col col-md-9">
-                                                    <div class="form-check">
-                                                        <div class="radio">
-                                                            <label for="is_featured1" class="form-check-label ">
-                                                                <input type="radio" id="is_featured1"
-                                                                    name="is_featured" value="1"
-                                                                    class="form-check-input" checked>Yes
-                                                            </label>
+                                                    @if ($is_featured == '1')
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_featured1" class="form-check-label ">
+                                                                    <input type="radio" id="is_featured1"
+                                                                        name="is_featured" value="1"
+                                                                        class="form-check-input" checked>Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_featured2" class="form-check-label ">
+                                                                    <input type="radio" id="is_featured2"
+                                                                        name="is_featured" value="0"
+                                                                        class="form-check-input">No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                        <div class="radio">
-                                                            <label for="is_featured2" class="form-check-label ">
-                                                                <input type="radio" id="is_featured2"
-                                                                    name="is_featured" value="0"
-                                                                    class="form-check-input">No
-                                                            </label>
+                                                    @else
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_featured1" class="form-check-label ">
+                                                                    <input type="radio" id="is_featured1"
+                                                                        name="is_featured" value="1"
+                                                                        class="form-check-input">Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_featured2" class="form-check-label ">
+                                                                    <input type="radio" id="is_featured2"
+                                                                        name="is_featured" value="0"
+                                                                        class="form-check-input"checked>No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -209,22 +245,41 @@
                                                     <label class=" form-control-label">Discounted</label>
                                                 </div>
                                                 <div class="col col-md-9">
-                                                    <div class="form-check">
-                                                        <div class="radio">
-                                                            <label for="is_discounted1" class="form-check-label ">
-                                                                <input type="radio" id="is_discounted1"
-                                                                    name="is_discounted" value="1"
-                                                                    class="form-check-input" checked>Yes
-                                                            </label>
+                                                    @if ($is_discounted == '1')
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_discounted1" class="form-check-label ">
+                                                                    <input type="radio" id="is_discounted1"
+                                                                        name="is_discounted" value="1"
+                                                                        class="form-check-input" checked>Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_discounted2" class="form-check-label ">
+                                                                    <input type="radio" id="is_discounted2"
+                                                                        name="is_discounted" value="0"
+                                                                        class="form-check-input">No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                        <div class="radio">
-                                                            <label for="is_discounted2" class="form-check-label ">
-                                                                <input type="radio" id="is_discounted2"
-                                                                    name="is_discounted" value="0"
-                                                                    class="form-check-input">No
-                                                            </label>
+                                                    @else
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_discounted1" class="form-check-label ">
+                                                                    <input type="radio" id="is_discounted1"
+                                                                        name="is_discounted" value="1"
+                                                                        class="form-check-input">Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_discounted2" class="form-check-label ">
+                                                                    <input type="radio" id="is_discounted2"
+                                                                        name="is_discounted" value="0"
+                                                                        class="form-check-input"checked>No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -234,22 +289,41 @@
                                                     <label class=" form-control-label">Tranding</label>
                                                 </div>
                                                 <div class="col col-md-9">
-                                                    <div class="form-check">
-                                                        <div class="radio">
-                                                            <label for="is_tranding1" class="form-check-label ">
-                                                                <input type="radio" id="is_tranding1"
-                                                                    name="is_tranding" value="1"
-                                                                    class="form-check-input" checked>Yes
-                                                            </label>
+                                                    @if ($is_tranding == '1')
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_tranding1" class="form-check-label ">
+                                                                    <input type="radio" id="is_tranding1"
+                                                                        name="is_tranding" value="1"
+                                                                        class="form-check-input" checked>Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_tranding2" class="form-check-label ">
+                                                                    <input type="radio" id="is_tranding2"
+                                                                        name="is_tranding" value="0"
+                                                                        class="form-check-input">No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                        <div class="radio">
-                                                            <label for="is_tranding2" class="form-check-label ">
-                                                                <input type="radio" id="is_tranding2"
-                                                                    name="is_tranding" value="0"
-                                                                    class="form-check-input">No
-                                                            </label>
+                                                    @else
+                                                        <div class="form-check">
+                                                            <div class="radio">
+                                                                <label for="is_tranding1" class="form-check-label ">
+                                                                    <input type="radio" id="is_tranding1"
+                                                                        name="is_tranding" value="1"
+                                                                        class="form-check-input">Yes
+                                                                </label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <label for="is_tranding2" class="form-check-label ">
+                                                                    <input type="radio" id="is_tranding2"
+                                                                        name="is_tranding" value="0"
+                                                                        class="form-check-input"checked>No
+                                                                </label>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
