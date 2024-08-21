@@ -11,6 +11,9 @@ class FrontController extends Controller
 {
     public function index(Request $request)
     {
+        // getData();
+        // die();
+
         $result['home_categories'] = DB::table('categories')
             ->where(['status' => 1])
             ->where(['is_home' => 1])
@@ -86,5 +89,31 @@ class FrontController extends Controller
         // print_r($result);
         // die();
         return view('front.index', $result);
+    }
+    public function product(Request $request, $slug)
+    {
+        $result['products'] =
+            DB::table('products')
+            ->where(['status' => 1])
+            ->where(['slug' => $slug])
+            ->get();
+        foreach ($result['products'] as $list1) {
+            $result['product_attr'][$list1->id] =
+                DB::table('products_attr')
+                ->leftJoin('sizes', 'sizes.id', '=', 'products_attr.size_id')
+                ->leftJoin('colors', 'colors.id', '=', 'products_attr.color_id')
+                ->where(['products_attr.product_id' => $list1->id])
+                ->get();
+        }
+        //print_array($result['products'][0]->category_id);
+
+        $result['related_products'] =
+            DB::table('products')
+            ->where(['status' => 1])
+            ->where(['category_id' => $result['products'][0]->category_id])
+            ->get();
+        print_array($result);
+
+        return view('front.product', $result);
     }
 }
