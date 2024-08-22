@@ -32,6 +32,7 @@ Route::get('/', [FrontController::class, 'index']);
 Route::get('product/{id}', [FrontController::class, 'product'])->name('product');
 
 Route::get('admin', [AdminController::class, 'index']);
+// Route::get('admin/updatepassword', [AdminController::class, 'updatepassword']);
 Route::post('admin/auth', [AdminController::class, 'auth'])->name('admin.auth');
 
 

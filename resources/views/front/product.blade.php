@@ -73,13 +73,17 @@
                                         <h4>Size</h4>
                                         <div class="aa-prod-view-size">
                                             @foreach ($product_attr[$products[0]->id] as $list)
-                                                <a href="#">{{ $list->size }}</a>
+                                                @if ($list->size != '')
+                                                    <a href="#">{{ $list->size }}</a>
+                                                @endif
                                             @endforeach
                                         </div>
                                         <h4>Color</h4>
                                         <div class="aa-color-tag">
                                             @foreach ($product_attr[$products[0]->id] as $list)
-                                                <a href="#" class="aa-color-{{ $list->color }}"></a>
+                                                @if ($list->color != '')
+                                                    <a href="#" class="aa-color-{{ strtolower($list->color) }}"></a>
+                                                @endif
                                             @endforeach
                                         </div>
                                         <div class="aa-prod-quantity">
@@ -109,6 +113,7 @@
                         <div class="aa-product-details-bottom">
                             <ul class="nav nav-tabs" id="myTab2">
                                 <li><a href="#description" data-toggle="tab">Description</a></li>
+                                <li><a href="#use" data-toggle="tab">Use</a></li>
                                 <li><a href="#review" data-toggle="tab">Reviews</a></li>
                             </ul>
 
@@ -116,6 +121,9 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade in active" id="description">
                                     {!! $products[0]->short_desc !!}
+                                </div>
+                                <div class="tab-pane fade" id="use">
+                                    {!! $products[0]->uses !!}
                                 </div>
                                 <div class="tab-pane fade " id="review">
                                     <div class="aa-product-review-area">
@@ -182,27 +190,35 @@
                             <h3>Related Products</h3>
                             <ul class="aa-product-catg aa-related-item-slider">
                                 <!-- start single product item -->
-                                @foreach ($products as $list)
-                                    @foreach ($cat_products[$list->category_id] as $list1)
+                                @if (isset($related_products[0]))
+                                    @foreach ($related_products as $list)
                                         <li>
                                             <figure>
-                                                <a class="aa-product-img" href="#"><img
-                                                        src="{{ asset('storage/upload/Product_Image/' . $list1->image) }}"
+                                                <a class="aa-product-img" href="{{ url('product/' . $list->slug) }}"><img
+                                                        src="{{ asset('storage/upload/Product_Image/' . $list->image) }}"
                                                         alt="polo shirt img"></a>
                                                 <a class="aa-add-card-btn"href="#"><span
                                                         class="fa fa-shopping-cart"></span>Add To
                                                     Cart</a>
                                                 <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">{{ $list1->name }}</a>
+                                                    <h4 class="aa-product-title"><a
+                                                            href="{{ url('product/' . $list->slug) }}">{{ $list->name }}</a>
                                                     </h4>
-                                                    <span class="aa-product-price">Rs. {{ $list1->price }}</span>
+                                                    <span class="aa-product-price">Rs.
+                                                        {{ $related_product_attr[$list->id][0]->price }}</span>
                                                     <span class="aa-product-price"><del>Rs.
-                                                            {{ $list1->mrp }}</del></span>
+                                                            {{ $related_product_attr[$list->id][0]->mrp }}</del></span>
                                                 </figcaption>
                                             </figure>
                                         </li>
                                     @endforeach
-                                @endforeach
+                                @else
+                                    <li>
+                                        <figure>
+                                            No Data Found
+                                        </figure>
+                                    </li>
+                                @endif
                             </ul>
                             <!-- quick view modal -->
                             <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog"

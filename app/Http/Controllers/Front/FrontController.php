@@ -110,9 +110,19 @@ class FrontController extends Controller
         $result['related_products'] =
             DB::table('products')
             ->where(['status' => 1])
+            ->where('slug', '!=', $slug)
             ->where(['category_id' => $result['products'][0]->category_id])
             ->get();
-        print_array($result);
+        foreach ($result['related_products'] as $list1) {
+            $result['related_product_attr'][$list1->id] =
+                DB::table('products_attr')
+                ->leftJoin('sizes', 'sizes.id', '=', 'products_attr.size_id')
+                ->leftJoin('colors', 'colors.id', '=', 'products_attr.color_id')
+                ->where(['products_attr.product_id' => $list1->id])
+                ->get();
+        }
+
+        //print_array($result);
 
         return view('front.product', $result);
     }

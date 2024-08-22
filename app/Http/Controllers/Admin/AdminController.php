@@ -58,7 +58,7 @@ class AdminController extends Controller
     // public function updatepassword()
     // {
     //     $r = Admin::find(1);
-    //     $r->password = Hash::make('123456');
+    //     $r->password = Hash::make('30554899');
     //     $r->save();
     // }
 }
