@@ -105,8 +105,15 @@ class FrontController extends Controller
                 ->where(['products_attr.product_id' => $list1->id])
                 ->get();
         }
-        //print_array($result['products'][0]->category_id);
+        foreach ($result['products'] as $list1) {
+            $result['product_images'][$list1->id] =
+                DB::table('product_images')
+                ->where(['product_id' => $list1->id])
+                ->get();
+        }
+        //print_array($result);
 
+        //print_array($result['products'][0]->category_id);
         $result['related_products'] =
             DB::table('products')
             ->where(['status' => 1])

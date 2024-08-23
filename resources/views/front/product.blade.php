@@ -1,4 +1,5 @@
 @extends('front.layout')
+@section('page_title', $products[0]->name)
 @section('container')
     <!-- catg header banner section -->
     {{-- <section id="aa-catg-head-banner">
@@ -37,26 +38,18 @@
                                                             class="simpleLens-big-image"></a>
                                                 </div>
                                             </div>
-                                            {{-- <div class="simpleLens-thumbnails-container">
-                                                <a data-big-image="{{ asset('storage/upload/Product_Image/' . $products[0]->image) }}"
-                                                    data-lens-image="{{ asset('storage/upload/Product_Image/' . $products[0]->image) }}"
-                                                    class="simpleLens-thumbnail-wrapper" href="#">
-                                                    <img src="{{ asset('storage/upload/Product_Image/' . $products[0]->image) }}"
-                                                        width="50px">
-                                                </a>
-                                                <a data-big-image="{{ asset('storage/upload/Product_Image/' . $products[0]->image) }}"
-                                                    data-lens-image="{{ asset('storage/upload/Product_Image/' . $products[0]->image) }}"
-                                                    class="simpleLens-thumbnail-wrapper" href="#">
-                                                    <img width="50px"
-                                                        src="{{ asset('storage/upload/Product_Image/' . $products[0]->image) }}">
-                                                </a>
-                                                <a data-big-image="img/view-slider/medium/polo-shirt-4.png"
-                                                    data-lens-image="img/view-slider/large/polo-shirt-4.png"
-                                                    class="simpleLens-thumbnail-wrapper" href="#">
-                                                    <img width="50px"
-                                                        src="{{ asset('storage/upload/Product_Image/' . $products[0]->image) }}">
-                                                </a>
-                                            </div> --}}
+                                            <div class="simpleLens-thumbnails-container">
+                                                @if(isset($product_images[$products[0]->id]))
+                                                    @foreach($product_images[$products[0]->id] as $pimage)
+                                                        <a data-big-image="{{ asset('storage/upload/product_images/' . $pimage->image) }}"
+                                                            data-lens-image="{{ asset('storage/upload/product_images/' . $pimage->image) }}"
+                                                            class="simpleLens-thumbnail-wrapper" href="#">
+                                                            <img src="{{ asset('storage/upload/product_images/' . $pimage->image) }}"
+                                                                width="50px">
+                                                        </a>
+                                                    @endforeach
+                                                @endif
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -72,9 +65,18 @@
                                         <p>{!! $products[0]->desc !!}</p>
                                         <h4>Size</h4>
                                         <div class="aa-prod-view-size">
-                                            @foreach ($product_attr[$products[0]->id] as $list)
-                                                @if ($list->size != '')
-                                                    <a href="#">{{ $list->size }}</a>
+                                            @php
+                                                $arrSize=[];
+                                                foreach($product_attr[$products[0]->id] as $list) {
+                                                    $arrSize[]=$list->size;
+                                                }
+                                                $arrSize=array_unique($arrSize);
+                                                // print_array($arrSize);
+                                                // die();
+                                            @endphp
+                                            @foreach ($arrSize as $size)
+                                                @if ($size!= '')
+                                                    <a href="javascript:void(0)" oncilck=showColor($size)>{{ $size }}</a>
                                                 @endif
                                             @endforeach
                                         </div>
@@ -82,19 +84,21 @@
                                         <div class="aa-color-tag">
                                             @foreach ($product_attr[$products[0]->id] as $list)
                                                 @if ($list->color != '')
-                                                    <a href="#" class="aa-color-{{ strtolower($list->color) }}"></a>
+                                                    <a href="javascript:void(0)" class="aa-color-{{ strtolower($list->color) }} product_color" id="{{$list->size}}"
+                                                       onclick=change_product_color_image("{{ asset('storage/upload/product_attribute_images/' . $list->attr_image) }}")></a>
                                                 @endif
                                             @endforeach
                                         </div>
                                         <div class="aa-prod-quantity">
                                             <form action="">
                                                 <select id="" name="">
-                                                    <option selected="1" value="0">1</option>
-                                                    <option value="1">2</option>
-                                                    <option value="2">3</option>
-                                                    <option value="3">4</option>
-                                                    <option value="4">5</option>
-                                                    <option value="5">6</option>
+                                                    {{-- <option selected="1" value="0">1</option> --}}
+                                                    @php
+                                                        for ($i = 1; $i < 11; $i++) {
+                                                            @endphp
+                                                            <option value={{$i}}>@php echo "$i";@endphp</option>@php
+                                                        }
+                                                    @endphp
                                                 </select>
                                             </form>
                                             <p class="aa-prod-category">
@@ -113,7 +117,9 @@
                         <div class="aa-product-details-bottom">
                             <ul class="nav nav-tabs" id="myTab2">
                                 <li><a href="#description" data-toggle="tab">Description</a></li>
+                                <li><a href="#technical_specification" data-toggle="tab">Technical Specification</a></li>
                                 <li><a href="#use" data-toggle="tab">Use</a></li>
+                                <li><a href="#warranty" data-toggle="tab">Warranty</a></li>
                                 <li><a href="#review" data-toggle="tab">Reviews</a></li>
                             </ul>
 
@@ -122,8 +128,14 @@
                                 <div class="tab-pane fade in active" id="description">
                                     {!! $products[0]->short_desc !!}
                                 </div>
+                                <div class="tab-pane fade" id="technical_specification">
+                                    {!! $products[0]->technical_specification !!}
+                                </div>
                                 <div class="tab-pane fade" id="use">
                                     {!! $products[0]->uses !!}
+                                </div>
+                                <div class="tab-pane fade" id="warranty">
+                                    {!! $products[0]->warranty !!}
                                 </div>
                                 <div class="tab-pane fade " id="review">
                                     <div class="aa-product-review-area">

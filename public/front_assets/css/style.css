@@ -2164,12 +2164,7 @@ img {
   margin-right: 10px;
   width: 30px;
 }
-#aa-product-details .aa-product-details-area .aa-product-details-content .aa-product-view-content .aa-color-tag .aa-color-red {
-  background-color: #f90000;
-}
-#aa-product-details .aa-product-details-area .aa-product-details-content .aa-product-view-content .aa-color-tag .aa-color-green {
-  background-color: #008000;
-}
+
 #aa-product-details .aa-product-details-area .aa-product-details-content .aa-product-view-content .aa-color-tag .aa-color-yellow {
   background-color: #ffff00;
 }
@@ -2183,6 +2178,16 @@ img {
   background-color: #fff;
   border: 1px solid #ccc;
 }
+.aa-color-red{
+  background-color: red;
+}
+.aa-color-green{
+  background-color: green;
+}
+.aa-color-blue{
+  background-color: blue;
+}
+
 #aa-product-details .aa-product-details-area .aa-product-details-bottom {
   display: inline;
   float: left;
