@@ -39,8 +39,8 @@
                                                 </div>
                                             </div>
                                             <div class="simpleLens-thumbnails-container">
-                                                @if(isset($product_images[$products[0]->id]))
-                                                    @foreach($product_images[$products[0]->id] as $pimage)
+                                                @if (isset($product_images[$products[0]->id]))
+                                                    @foreach ($product_images[$products[0]->id] as $pimage)
                                                         <a data-big-image="{{ asset('storage/upload/product_images/' . $pimage->image) }}"
                                                             data-lens-image="{{ asset('storage/upload/product_images/' . $pimage->image) }}"
                                                             class="simpleLens-thumbnail-wrapper" href="#">
@@ -66,17 +66,23 @@
                                         <h4>Size</h4>
                                         <div class="aa-prod-view-size">
                                             @php
-                                                $arrSize=[];
-                                                foreach($product_attr[$products[0]->id] as $list) {
-                                                    $arrSize[]=$list->size;
+                                                $arrSize = [];
+                                                foreach ($product_attr[$products[0]->id] as $list) {
+                                                    $arrSize[] = $list->size;
                                                 }
-                                                $arrSize=array_unique($arrSize);
+                                                $arrSize = array_unique($arrSize);
                                                 // print_array($arrSize);
                                                 // die();
                                             @endphp
                                             @foreach ($arrSize as $size)
-                                                @if ($size!= '')
-                                                    <a href="javascript:void(0)" oncilck=showColor($size)>{{ $size }}</a>
+                                                @if ($size != '')
+                                                    {{-- <a href="javascript:void(0)" oncilck="showColor('{{$size}}')">
+                                                        {{ $size }}
+                                                    </a> --}}
+                                                    <button type="button" value="" id="size_{{ $size }}"
+                                                        class="size_link"
+                                                        onClick="showColor('{{ $size }}')">{{ $size }}
+                                                    </button>
                                                 @endif
                                             @endforeach
                                         </div>
@@ -84,21 +90,25 @@
                                         <div class="aa-color-tag">
                                             @foreach ($product_attr[$products[0]->id] as $list)
                                                 @if ($list->color != '')
-                                                    <a href="javascript:void(0)" class="aa-color-{{ strtolower($list->color) }} product_color" id="{{$list->size}}"
-                                                       onclick=change_product_color_image("{{ asset('storage/upload/product_attribute_images/' . $list->attr_image) }}")></a>
+                                                    <a href="javascript:void(0)"
+                                                        class="aa-color-{{ strtolower($list->color) }} product_color size_{{ $list->size }}"
+                                                        onclick=change_product_color_image("{{ asset('storage/upload/product_attribute_images/' . $list->attr_image) }}","{{ $list->color }}")></a>
                                                 @endif
                                             @endforeach
                                         </div>
                                         <div class="aa-prod-quantity">
                                             <form action="">
-                                                <select id="" name="">
+                                                <select id="qty" name="qty">
                                                     {{-- <option selected="1" value="0">1</option> --}}
-                                                    @php
+                                                    {{-- @php
                                                         for ($i = 1; $i < 11; $i++) {
                                                             @endphp
                                                             <option value={{$i}}>@php echo "$i";@endphp</option>@php
                                                         }
-                                                    @endphp
+                                                    @endphp --}}
+                                                    @for ($i = 1; $i < 11; $i++)
+                                                        <option value={{ $i }}>{{ $i }}</option>
+                                                    @endfor
                                                 </select>
                                             </form>
                                             <p class="aa-prod-category">
@@ -106,9 +116,12 @@
                                             </p>
                                         </div>
                                         <div class="aa-prod-view-bottom">
-                                            <a class="aa-add-to-cart-btn" href="#">Add To Cart</a>
-                                            <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
-                                            <a class="aa-add-to-cart-btn" href="#">Compare</a>
+                                            <a class="aa-add-to-cart-btn" href="javascript:void(0)"
+                                                onclick="add_to_cart('{{ $products[0]->id }}')">Add To Cart</a>
+                                            {{-- <a class="aa-add-to-cart-btn" href="#">Wishlist</a>
+                                            <a class="aa-add-to-cart-btn" href="#">Compare</a> --}}
+                                        </div>
+                                        <div id="add_to_cart_msg">
                                         </div>
                                     </div>
                                 </div>
@@ -348,5 +361,13 @@
             </div>
         </div>
     </section>
+    <form id="frmAddToCart">
+        @csrf
+        <input type="hidden" id="size_id" name="size_id">
+        <input type="hidden" id="color_id" name="color_id">
+        <input type="hidden" id="pqty" name="pqty">
+        <input type="hidden" id="product_id" name="product_id">
+        {{-- <input type="hidden" name="_token" value="@csrf"> --}}
+    </form>
     <!-- / Subscribe section -->
 @endsection

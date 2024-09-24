@@ -60,3 +60,16 @@ composer dump-autoload
      "app/helpers/common.php"
 ]
 */
+
+function getUserTempId()
+{
+    if (session()->has('USER_TEMP_ID') === null) {
+        // $USER_TEMP_ID = Session::get('USER_TEMP_ID');
+        // dd($USER_TEMP_ID);
+        $rand = rand(111111111, 999999999);
+        session()->put('USER_TEMP_ID', $rand);
+        return $rand;
+    } else {
+        return session()->get('USER_TEMP_ID');
+    }
+}

@@ -356,6 +356,44 @@ jQuery(function($){
     });
 });
 
-function change_product_color_image(img) {
-    $('.simpleLens-big-image-container').html('<a data-lens-image="'+img+'" class="simpleLens-lens-image"><img src="'+img+'" class="simpleLens-big-image"></a>');
+function change_product_color_image(img,color) {
+  // console.log("hello");
+  $('#color_id').val(color);
+  $('.simpleLens-big-image-container').html('<a data-lens-image="'+img+'" class="simpleLens-lens-image"><img src="'+img+'" class="simpleLens-big-image"></a>');
 }
+function showColor(size) {
+  // console.log(size);
+  $('#size_id').val(size);
+  $('.product_color').hide();
+  $('.size_' + size).show();
+  $('.size_link').css('border','0px');
+  $('#size_' + size).css('border','1px solid black');
+}
+
+function add_to_cart(id) {
+  $('#add_to_cart_msg').html('');
+  var size_id = $('#size_id').val();
+  var color_id = $('#color_id').val();
+  if (size_id == '') {
+    $('#add_to_cart_msg').html('<div class="alert alert-danger" role="alert">Please select a size</div>');
+  } else if(color_id==''){
+    $('#add_to_cart_msg').html('<div class="alert alert-danger" role="alert">Please select a color</div>');
+  } else {
+    // alert('Thanks');
+    $('#product_id').val(id);
+    $('#pqty').val($('#qty').val());
+    $.ajax({
+      url: '/add_to_cart',
+      data:$('#frmAddToCart').serialize(),
+      type:'post',
+      success: function (result) {
+        // console.log(result);
+        alert('Product '+result.msg+' successfully');
+      }
+    });
+  }
+
+}
+// function showColor() {
+//   console.log("hello");
+// }

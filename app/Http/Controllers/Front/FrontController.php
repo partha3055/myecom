@@ -133,4 +133,55 @@ class FrontController extends Controller
 
         return view('front.product', $result);
     }
+    public function addToCart(Request $request)
+    {
+        // print_array($_POST);
+        if ($request->session()->has('FRONT_USER_LOGIN')) {
+            $uid = $request->session()->get('FRONT_USER_LOGIN');
+            $user_type = "Reg";
+        } else {
+            $uid = getUserTempId();
+            $user_type = "Not-Reg";
+        }
+        $size_id = $request->post('size_id');
+        $color_id = $request->post('color_id');
+        $pqty = $request->post('pqty');
+        $product_id = $request->post('product_id');
+
+        $result = DB::table('products_attr')
+            ->select('products_attr.id')
+            ->leftJoin('sizes', 'sizes.id', '=', 'products_attr.size_id')
+            ->leftJoin('colors', 'colors.id', '=', 'products_attr.color_id')
+            ->where(['products_attr.product_id' => $product_id])
+            ->where(['sizes.size' => $size_id])
+            ->where(['colors.color' => $color_id])
+            ->get();
+        $product_attr_id = $result[0]->id;
+
+        $check = DB::table('cart')
+            ->where(['user_id' => $uid])
+            ->where(['user_type' => $user_type])
+            ->where(['product_id' => $product_id])
+            ->where(['product_attr_id' => $product_attr_id])
+            ->get();
+
+        if (isset($check[0])) {
+            $updated_id = $check[0]->id;
+            DB::table('cart')
+                ->where(['id' => $updated_id])
+                ->update(['qty' => $pqty]);
+            $msg = 'updated';
+        } else {
+            $id = DB::table('cart')->insertGetId([
+                'user_id' => $uid,
+                'user_type' => $user_type,
+                'product_id' => $product_id,
+                'product_attr_id' => $product_attr_id,
+                'qty' => $pqty,
+                'added_on' => date('Y-m-d')
+            ]);
+            $msg = 'added';
+        }
+        return response()->json(['msg' => $msg]);
+    }
 }

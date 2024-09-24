@@ -29,7 +29,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', [FrontController::class, 'index']);
+Route::post('add_to_cart', [FrontController::class, 'addToCart']);
 Route::get('product/{id}', [FrontController::class, 'product'])->name('product');
+
 
 Route::get('admin', [AdminController::class, 'index']);
 // Route::get('admin/updatepassword', [AdminController::class, 'updatepassword']);
