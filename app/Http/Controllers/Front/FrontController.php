@@ -32,6 +32,9 @@ class FrontController extends Controller
                     ->where(['products_attr.product_id' => $list1->id])
                     ->get();
             }
+            // echo "<pre>";
+            // print_r($result);
+            // die();
         }
 
         $result['home_brands'] = DB::table('brands')
@@ -167,10 +170,17 @@ class FrontController extends Controller
 
         if (isset($check[0])) {
             $updated_id = $check[0]->id;
-            DB::table('cart')
-                ->where(['id' => $updated_id])
-                ->update(['qty' => $pqty]);
-            $msg = 'updated';
+            if ($pqty == 0) {
+                DB::table('cart')
+                    ->where(['id' => $updated_id])
+                    ->delete();
+                $msg = 'removed';
+            } else {
+                DB::table('cart')
+                    ->where(['id' => $updated_id])
+                    ->update(['qty' => $pqty]);
+                $msg = 'updated';
+            }
         } else {
             $id = DB::table('cart')->insertGetId([
                 'user_id' => $uid,
@@ -182,6 +192,31 @@ class FrontController extends Controller
             ]);
             $msg = 'added';
         }
+        // return response()->json(['id' => $id, 'msg' => $msg]);
         return response()->json(['msg' => $msg]);
+    }
+
+    public function cart(Request $request)
+    {
+        if ($request->session()->has('FRONT_USER_LOGIN')) {
+            $uid = $request->session()->get('FRONT_USER_LOGIN');
+            $user_type = "Reg";
+        } else {
+            $uid = getUserTempId();
+            $user_type = "Not-Reg";
+        }
+        $result['cart'] = DB::table('cart')
+            ->leftJoin('products', 'products.id', '=', 'cart.product_id')
+            ->leftJoin('products_attr', 'products_attr.id', '=', 'cart.product_attr_id')
+            ->leftJoin('sizes', 'sizes.id', '=', 'products_attr.size_id')
+            ->leftJoin('colors', 'colors.id', '=', 'products_attr.color_id')
+            ->where(['user_id' => $uid])
+            ->where(['user_type' => $user_type])
+            ->select('cart.qty', 'products.id as pid', 'products.name', 'products.image', 'products.slug', 'products_attr.id as attr_id', 'products_attr.price', 'sizes.size', 'colors.color')
+            ->get();
+
+        // print_array($result);
+
+        return view('front.cart', $result);
     }
 }

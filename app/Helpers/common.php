@@ -63,7 +63,7 @@ composer dump-autoload
 
 function getUserTempId()
 {
-    if (session()->has('USER_TEMP_ID') === null) {
+    if (session()->has('USER_TEMP_ID') == null) {
         // $USER_TEMP_ID = Session::get('USER_TEMP_ID');
         // dd($USER_TEMP_ID);
         $rand = rand(111111111, 999999999);
@@ -72,4 +72,28 @@ function getUserTempId()
     } else {
         return session()->get('USER_TEMP_ID');
     }
+}
+
+function getAddToCartTotalItem()
+{
+    if (session()->has('FRONT_USER_LOGIN')) {
+        $uid = session()->get('FRONT_USER_LOGIN');
+        $user_type = "Reg";
+    } else {
+        $uid = getUserTempId();
+        $user_type = "Not-Reg";
+    }
+
+    $result = DB::table('cart')
+        ->leftJoin('products', 'products.id', '=', 'cart.product_id')
+        ->leftJoin('products_attr', 'products_attr.id', '=', 'cart.product_attr_id')
+        ->leftJoin('sizes', 'sizes.id', '=', 'products_attr.size_id')
+        ->leftJoin('colors', 'colors.id', '=', 'products_attr.color_id')
+        ->where(['user_id' => $uid])
+        ->where(['user_type' => $user_type])
+        ->select('cart.qty', 'products.id as pid', 'products.name', 'products.image', 'products.slug', 'products_attr.id as attr_id', 'products_attr.price', 'sizes.size', 'colors.color')
+        ->get();
+    // dd($result);
+    // return (count($result));
+    return $result;
 }

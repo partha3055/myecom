@@ -370,6 +370,12 @@ function showColor(size) {
   $('#size_' + size).css('border','1px solid black');
 }
 
+function home_add_to_cart(id,size_id,color_id) {
+  $('#color_id').val(color_id);
+  $('#size_id').val(size_id);
+  add_to_cart(id);
+}
+
 function add_to_cart(id) {
   $('#add_to_cart_msg').html('');
   var size_id = $('#size_id').val();
@@ -387,12 +393,33 @@ function add_to_cart(id) {
       data:$('#frmAddToCart').serialize(),
       type:'post',
       success: function (result) {
-        // console.log(result);
+        // console.log(result.id);
+        console.log(result.msg);
         alert('Product '+result.msg+' successfully');
       }
     });
   }
 
+}
+
+function updateQty(pid,size,color,attr_id) {
+  // alert("hello");
+  $('#color_id').val(color);
+  $('#size_id').val(size);
+  var qty = $('#qty' + attr_id).val();
+  $('#qty').val(qty);
+  add_to_cart(pid);
+  location.reload();
+}
+
+function deleteCartProduct(pid,size,color,attr_id) {
+  // alert("hello");
+  $('#color_id').val(color);
+  $('#size_id').val(size);
+  $('#qty').val(0);
+  add_to_cart(pid);
+  $('#cart_box' + attr_id).remove();
+  location.reload();
 }
 // function showColor() {
 //   console.log("hello");

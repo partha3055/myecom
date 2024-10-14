@@ -30,6 +30,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [FrontController::class, 'index']);
 Route::post('add_to_cart', [FrontController::class, 'addToCart']);
+Route::get('cart', [FrontController::class, 'cart']);
 Route::get('product/{id}', [FrontController::class, 'product'])->name('product');
 
 

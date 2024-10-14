@@ -1,4 +1,5 @@
 @extends('front.layout')
+@section('page_title', 'Home')
 @section('container')
     <!-- Start slider -->
     <section id="aa-slider">
@@ -130,8 +131,8 @@
                                                                     href="{{ url('product/' . $product->slug) }}"><img
                                                                         src="{{ asset('storage/upload/Product_Image/' . $product->image) }}"
                                                                         alt="{{ $product->name }}"></a>
-                                                                <a
-                                                                    class="aa-add-card-btn"href="{{ url('product/' . $product->slug) }}"><span
+                                                                <a class="aa-add-card-btn" href="javascript:void(0)"
+                                                                    onclick="home_add_to_cart('{{ $product->id }}','{{ $home_product_attr[$product->id][0]->size }}','{{ $home_product_attr[$product->id][0]->color }}')"><span
                                                                         class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                                 <figcaption>
                                                                     <h4 class="aa-product-title"><a
@@ -544,5 +545,14 @@
             </div>
         </div>
     </section>
+    <input type="hidden" id="qty" value="1" />
+    <form id="frmAddToCart">
+        @csrf
+        <input type="hidden" id="size_id" name="size_id">
+        <input type="hidden" id="color_id" name="color_id">
+        <input type="hidden" id="pqty" name="pqty">
+        <input type="hidden" id="product_id" name="product_id">
+        {{-- <input type="hidden" name="_token" value="@csrf"> --}}
+    </form>
     <!-- / Subscribe section -->
 @endsection
